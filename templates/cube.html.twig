@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/cube.css') }}" />    
+{% endblock %}
+
+{% block body %}
+<div id="cube" class="pt-perspective">
+    {% include 'cube/front.html.twig' %}
+    {% include 'cube/back.html.twig' %}
+    {% include 'cube/top.html.twig' %}
+    {% include 'cube/bottom.html.twig' %}
+    {% include 'cube/left.html.twig' %}
+    {% include 'cube/right.html.twig' %}
+</div>
+{% include 'cube-map.html.twig' %}
+{% endblock %}
+
+{% block js %}
+    <script src="{{ asset('js/cube.js') }}"></script>
+{% endblock %}
