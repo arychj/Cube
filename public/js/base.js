@@ -1,7 +1,9 @@
-var _skycons;
-
 $(document).ready(function(){
     $('#cube').cubify();
+    $('#traffic .map').traffic({
+        'apiKey': _global_credentials['google-maps-apikey'],
+        'location': _global_credentials['traffic-location']
+    });
 
     $('#floorplan').floorplan({
         'controls': {

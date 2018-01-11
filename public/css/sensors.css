@@ -61,3 +61,14 @@
     color: #666666;
     text-align: center;
 }
+
+#traffic{
+    text-align: center;
+}
+
+#traffic .map{
+    margin: auto;
+    height: 350px;
+    width: 350px;
+    -webkit-filter: invert(100%) grayscale(100%);
+}
