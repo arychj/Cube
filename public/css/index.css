@@ -4,7 +4,9 @@ html{
 }
 
 body{
-    font-family: Verdana, sans-serif !important;
+    font-family: Roboto, sans-serif !important;
+    font-size: 28px;
+
     user-select: none;
 }
 
@@ -21,6 +23,7 @@ body{
 	height: 100%;
 	background-color: #111 !important;
     overflow: hidden;
+    padding-top: 10px;
 }
 
 .pt-perspective {
@@ -55,3 +58,6 @@ body{
 .pt-page-ontop {
 	z-index: 999;
 }
+
+.row{
+    margin-bottom: 10px;

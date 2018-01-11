@@ -1,21 +1,24 @@
 (function($){
     var _floorplan;
+    var _loadedFloorplans = 0;
 
     function init(params){
-        $(this).on('load', function(){
-            console.log('Floorplan initializing...');
+        _floorplan = this;
 
-            _floorplan = this;
+        $(this).find('svg').on('load', function(){
+            if(++_loadedFloorplans == $(_floorplan).find('svg').length){
+                console.log('Initializing floorplan...');
 
-            acceptParameters(params);
-            darken();
-            assignControls(params['controls']);
 
-            $(this).trigger('floorplan-ready');
-            console.log('Floorplan ready...');
+                acceptParameters(params);
+                darken();
+                assignControls(params['controls']);
 
-            if(params['onReady'] != null){
-                params['onReady']();
+                $(this).trigger('floorplan-ready');
+
+                if(params['onReady'] != null){
+                    params['onReady']();
+                }
             }
         });
 

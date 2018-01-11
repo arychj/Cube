@@ -58,7 +58,7 @@
                 var id = event.data.entity_id;
                 if(id in _watchedEntities){
                     var state = event.data.new_state.state;
-                    setControlState(id, state);
+                    setState(id, state);
                 }
 
             }
@@ -69,34 +69,22 @@
         sendMessage({'type': 'get_states'}, function(event){
             $(event.result).each(function(index){
                 if(this.entity_id in _watchedEntities){
-                    setControlState(this.entity_id, this.state);
+                    setState(this.entity_id, this.state);
                 }
             });
         });
     }
 
-    function setControlState(id, state){
-        var control = getControl(id);
+    function setState(id, state){
         var type = getTypeFromId(id);
-
         switch(type){
-            case 'light':
-                if(state == 'on'){
-                    if($(control).parents('svg')){
-                        $(control).svgAddClass('active');
-                    }
-                    else{
-                        $(control).addClass('active');
-                    }
-                }
-                else{
-                    if($(control).parents('svg')){
-                        $(control).svgRemoveClass('active');
-                    }
-                    else{
-                        $(control).removeClass('active');
-                    }
-                }
+            case 'sensor':
+                var sensor = getSensor(id);
+                $(sensor).trigger('update-state', {'state': state});
+                break;
+            default:
+                var control = getControl(id);
+                $(control).trigger('update-state', {'state': state});
                 break;
         }
     }
@@ -166,6 +154,10 @@
         return $('.control[entity-id="' + id + '"]');
     }
 
+    function getSensor(id){
+        return $('.sensor[entity-id="' + id + '"]');
+    }
+
     function parseEvent(message){
         if(message.success === 'false'){
             log(message.error.message);
@@ -187,15 +179,16 @@
     function discoverEntities(){
         _watchedEntities = {}
 
-        $('.control[entity-id]').each(function(index){
+        $('.control[entity-id],.sensor[entity-id]').each(function(index){
             var entityId = $(this).attr('entity-id');
             if(!(entityId in _watchedEntities)){
                 _watchedEntities[entityId] = [];
             }
 
             _watchedEntities[entityId].push(this);
-            console.log(this);
         });
+
+        console.log(_watchedEntities);
     }
 
     function logEvent(event){

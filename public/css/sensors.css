@@ -1,0 +1,63 @@
+#date{
+    color: #666666;
+    font-size: 20px;
+}
+
+#time{
+    font-size: 36px;
+}
+
+#weather{
+    text-align: right;
+}
+
+#weather i{
+    color: #333333;
+    vertical-align: middle;
+}
+
+#weather .sensor{
+    vertical-align: middle;
+}
+
+#weather img{
+    vertical-align: middle;
+    height: 35px;
+}
+
+#weather .sensor[entity-id$=icon]{
+    text-align: right;
+}
+
+#weather .sensor[entity-id$=temperature]{
+    font-size: 60px;
+}
+
+#weather .sensor[entity-id$=high_temperature],
+#weather .sensor[entity-id$=low_temperature]{
+    text-align: center;
+    color: #333333;
+    font-size: 30px;
+}
+
+#weather .sensor[entity-id$=temperature]::after{
+    content: '\00b0';
+}
+
+#weather .sensor[entity-id$=wind_speed],
+#weather .sensor[entity-id$=wind_bearing],
+#weather .sensor[entity-id$=sunrise],
+#weather .sensor[entity-id$=sunset]{
+    color: #666666;
+    font-size: 25px;
+}
+
+#weather .sensor[entity-id$=wind_bearing]{
+    /* vertical-align: super;*/
+}
+
+#weather .sensor[entity-id$=summary]{
+    font-size: 20px;
+    color: #666666;
+    text-align: center;
+}
