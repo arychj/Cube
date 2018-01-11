@@ -1,3 +1,7 @@
+#cube{
+    padding-top: 10px;
+}
+
 #cube-map{
     font-size: 16px;
     position: fixed;
@@ -42,5 +46,5 @@
 }
 
 .cube-map-face[cube-face-show=top], .cube-map-face[cube-face-show=bottom]{
-    margin-left: 20px;
+    margin-left: 19px;
 }

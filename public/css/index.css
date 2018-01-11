@@ -23,7 +23,6 @@ body{
 	height: 100%;
 	background-color: #111 !important;
     overflow: hidden;
-    padding-top: 10px;
 }
 
 .pt-perspective {
@@ -61,3 +60,4 @@ body{
 
 .row{
     margin-bottom: 10px;
+}

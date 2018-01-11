@@ -1,14 +1,14 @@
-<svg version="1.1" id="upstairs" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-	 x="0px" y="0px" width="475px" height="225px" viewBox="0 0 475 225" enable-background="new 0 0 475 225" xml:space="preserve">
-<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="319.501" y1="112.5" x2="319.501" y2="102.501"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="upstairs" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="475px" height="225px" viewBox="0 0 475 225" enable-background="new 0 0 475 225" xml:space="preserve">
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="18.5" y1="12.385" x2="18.5" y2="212.385"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="18.5" y1="212.385" x2="425.5" y2="212.385"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="425.5" y1="212.385" x2="425.5" y2="179.385"/>
-<g>
-	<rect x="218.5" y="12.385" fill="#DDDDDD" stroke="#000000" stroke-miterlimit="10" width="15" height="100"/>
-	<rect x="304.039" y="12.5" fill="#DDDDDD" stroke="#000000" stroke-miterlimit="10" width="15" height="100"/>
-	<rect x="219" y="12.886" fill="#DDDDDD" stroke="#000000" stroke-miterlimit="10" width="100" height="25"/>
-</g>
+<rect x="215.904" y="36.542" fill="#DDDDDD" stroke="#000000" stroke-miterlimit="10" width="15.5" height="75.729"/>
+<rect x="300.943" y="37.771" fill="#DDDDDD" stroke="#000000" stroke-miterlimit="10" width="15" height="74.614"/>
+<rect x="215.904" y="12.771" fill="#DDDDDD" stroke="#000000" stroke-miterlimit="10" width="100" height="25"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="406.671" y1="137.385" x2="406.671" y2="102.501"/>
 <g>
 	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="375.841" y1="137.385" x2="375.841" y2="179.385"/>
@@ -21,46 +21,43 @@
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="406.671" y1="102.501" x2="456.5" y2="102.5"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="456.5" y1="112.385" x2="456.5" y2="137.385"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="456.5" y1="154.385" x2="456.5" y2="137.385"/>
-<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="319.501" y1="102.501" x2="375.501" y2="102.501"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="315.943" y1="102.501" x2="375.501" y2="102.501"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="375.5" y1="112.5" x2="375.5" y2="102.501"/>
-<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="319.501" y1="102.501" x2="319.501" y2="12.385"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="456.5" y1="112.385" x2="456.5" y2="12.385"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="456.5" y1="12.385" x2="18.5" y2="12.385"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="375.5" y1="112.5" x2="380.999" y2="112.5"/>
 <line fill="none" stroke="#000000" stroke-miterlimit="10" x1="380.999" y1="112.5" x2="380.999" y2="102.5"/>
 <rect x="409.25" y="105.25" fill="#FFFFFF" width="44.249" height="46.5"/>
-<rect id="stairs" x="223.5" y="143.615" fill="#FFFFFF" width="63.771" height="63.771"/>
-<g id="gfx_x5F_stairs">
-	<rect x="218.5" y="137.385" fill="none" stroke="#000000" stroke-miterlimit="10" width="25" height="75.002"/>
-	<rect x="218.5" y="187.385" fill="none" stroke="#000000" stroke-miterlimit="10" width="75.001" height="25"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="137.385" x2="293.5" y2="187.387"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="187.385" x2="287.27" y2="143.615"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="268.485" y1="187.385" x2="268.485" y2="212.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="256.001" y1="187.387" x2="256.001" y2="212.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="162.387" x2="218.5" y2="162.387"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="174.885" x2="218.5" y2="174.885"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="168.939" x2="218.5" y2="168.939"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="181.615" x2="218.5" y2="181.615"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="149.846" x2="218.5" y2="149.846"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="156.119" x2="218.5" y2="156.119"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="144.008" x2="218.5" y2="144.008"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="249.27" y1="187.385" x2="249.27" y2="212.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="261.945" y1="187.385" x2="261.945" y2="212.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="281.039" y1="187.385" x2="281.039" y2="212.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="286.877" y1="187.617" x2="286.877" y2="212.615"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="275.057" y1="187.385" x2="275.057" y2="212.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="243.5" y1="137.385" x2="281.01" y2="137.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="293.471" y1="149.846" x2="293.471" y2="187.385"/>
-	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="293.471" y1="149.846" x2="281.01" y2="137.385"/>
-</g>
-<rect id="living_x5F_room" x="23.5" y="117.386" fill="#FFFFFF" width="190" height="90"/>
-<rect id="dinning_x5F_room" x="23.5" y="17.5" fill="#FFFFFF" width="190" height="90"/>
+<rect id="living-room" x="23.5" y="117.386" fill="#FFFFFF" width="187.499" height="90"/>
+<rect id="dinning-room" x="23.5" y="17.5" fill="#FFFFFF" width="187.499" height="90"/>
 <rect id="kitchen" x="237.5" y="41.5" fill="#FFFFFF" width="62.348" height="71.333"/>
 <g id="entryway">
 	<rect id="closet" x="298.182" y="118.833" fill="#FFFFFF" width="73" height="88.553"/>
 	<rect id="hall" x="371.182" y="183.5" fill="#FFFFFF" width="51.333" height="23.886"/>
 </g>
-<rect id="guest_x5F_bedroom" x="322.832" y="15.834" fill="#FFFFFF" width="130.667" height="83.667"/>
-<line id="guest_x5F_bathroom" fill="none" stroke="#000000" stroke-miterlimit="10" x1="380.999" y1="102.5" x2="406.671" y2="102.5"/>
-<rect id="coat_x5F_rack" x="383.833" y="105.25" fill="#FFFFFF" width="20" height="29.25"/>
+<rect id="guest-bedroom" x="322.832" y="15.834" fill="#FFFFFF" width="130.667" height="83.667"/>
+<line id="guest-bathroom" fill="none" stroke="#000000" stroke-miterlimit="10" x1="380.999" y1="102.5" x2="406.671" y2="102.5"/>
+<rect id="coat-rack" x="383.833" y="105.25" fill="#FFFFFF" width="20" height="29.25"/>
+<g id="gfx-stairs">
+	<polygon id="stairs" fill="#FFFFFF" stroke="#000000" stroke-miterlimit="10" points="290.58,187.006 290.58,212.006 
+		215.58,212.006 215.58,137.006 278.09,137.006 290.55,149.467 290.55,187.006 	"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="137.008" x2="290.578" y2="187.01"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="187.008" x2="284.348" y2="143.238"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="265.562" y1="187.008" x2="265.562" y2="212.008"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="253.079" y1="187.01" x2="253.079" y2="212.008"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="162.01" x2="215.578" y2="162.01"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="174.508" x2="215.578" y2="174.508"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="168.562" x2="215.578" y2="168.562"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="181.238" x2="215.578" y2="181.238"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="149.469" x2="215.578" y2="149.469"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="155.742" x2="215.578" y2="155.742"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="143.631" x2="215.578" y2="143.631"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="246.348" y1="187.008" x2="246.348" y2="212.008"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="259.023" y1="187.008" x2="259.023" y2="212.008"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="278.117" y1="187.008" x2="278.117" y2="212.008"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="283.955" y1="187.24" x2="283.955" y2="212.238"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="272.135" y1="187.008" x2="272.135" y2="212.008"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="290.58" y1="187.006" x2="215.58" y2="187.006"/>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="240.578" y1="137.008" x2="240.578" y2="212.008"/>
+</g>
 </svg>

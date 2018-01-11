@@ -5,8 +5,14 @@ $(document).ready(function(){
 
     $('#floorplan').floorplan({
         'controls': {
-            '[id=living_x5F_room]': 'light.living_room',
-            '[id=closet]': 'light.entryway',
+            '#loft [id=office]': 'light.loft',
+            '#upstairs [id=living-room]': 'light.living_room',
+            '#upstairs [id=closet]': 'light.entryway',
+            '#downstairs [id=master-bedroom]': 'light.bedroom_master',
+            '#downstairs [id=master-bathroom-main]': 'light.light_3056',
+            '#downstairs [id=master-bathroom-closet]': 'light.light_3057',
+            '#downstairs [id=master-bathroom-laundry]': 'light.light_3058',
+            '[id=stairs]': 'light.stair'
         },
         'onReady': function(){
             $('.sensor').sensor();
