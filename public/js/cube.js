@@ -23,6 +23,11 @@
         return this;
     }
 
+    function acceptParameters(params){
+        $.event.special.swipe.horizontalDistanceThreshold = params['horizontalSwipeThreshold'];
+        $.event.special.swipe.verticalDistanceThreshold = params['verticalSwipeThreshold'];
+    }
+
     function show(face){
         $('[cube-face]').fadeOut().removeAttr('cube-face-current');
 	    $(face).attr({'cube-face-current': ''}).fadeIn();
@@ -171,12 +176,11 @@
     }
 
     $.fn.cubify = function(){
-        return init.apply(this);
+        arguments[0] = $.extend(true,{
+            'horizontalSwipeThreshold': '40px',
+            'verticalSwipeThreshold': '75px'
+        }, arguments[0]);
+
+        return init.apply(this, arguments);
     };
 })(jQuery);
-
-/*
-
-
-
-*/
