@@ -25,7 +25,6 @@
             'latitude': parseFloat(coordinates[0]),
             'longitude': parseFloat(coordinates[1])
         }
-        console.log(_location);
     }
 
     function trafficMap() {
@@ -58,6 +57,13 @@
                     "stylers": [
                         { "visibility": "off" }
                     ]
+                },
+                {elementType: 'geometry', stylers: [{color: '#000000', fill: '#000000'}]},
+                {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+                {   
+                  featureType: 'administrative.locality',
+                  elementType: 'labels.text.fill',
+                  stylers: [{color: '#ffffff'}]
                 },
             ]
         });

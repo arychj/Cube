@@ -4,7 +4,17 @@
             <div class="row">
                 <div class="col s12">
                     <div id="date" class="sensor" entity-id="sensor.date">&nbsp;</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
                     <div id="time" class="sensor" entity-id="sensor.time">&nbsp;</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <div class="title">Notices</div>
+                    <ul id="notices"></ul>
                 </div>
             </div>
         </div>
@@ -17,8 +27,9 @@
             <div class="row" id="weather">
                 <div class="col s12">
                     <div class="row">
-                        <div class="col s1">&nbsp;</div>
-                        <div class="col s11">
+                        <div class="col s12 icons">
+                            <img src="{{ asset('img/weather-icons/wi-raindrop.svg') }}"/>
+                            <span class="sensor" entity-id="sensor.dark_sky_precip_probability">&nbsp;</span>
                             <img src="{{ asset('img/weather-icons/wi-strong-wind.svg') }}"/>
                             <span class="sensor" entity-id="sensor.dark_sky_wind_speed">&nbsp;</span>
                             <span class="sensor" entity-id="sensor.dark_sky_wind_bearing">&nbsp;</span>
@@ -31,7 +42,7 @@
                     <div class="row">
                         <div class="col s2">&nbsp;</div>
                         <div class="col s4 icon">
-                            <canvas id="icon_current" width="75" height="75" class="sensor" entity-id="sensor.dark_sky_icon"></canvas>
+                            <canvas id="icon_current" width="80" height="80" class="sensor" entity-id="sensor.dark_sky_icon"></canvas>
                         </div>
                         <div class="col s3">
                             <div class="sensor temperature" entity-id="sensor.dark_sky_temperature">0</div>
@@ -42,21 +53,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s2">&nbsp;</div>
-                        <div class="col s10">
-                            <div class="sensor summary" entity-id="sensor.dark_sky_hourly_summary">&nbsp;</div>
+                        <div class="col s12 summary">
+                            <span class="sensor" entity-id="sensor.dark_sky_summary">&nbsp;</span>
+                            <span class="sensor" entity-id="sensor.dark_sky_hourly_summary">&nbsp;</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div id="traffic" class="col12">
+                    <div class="title right">Traffic</div>
                     <div class="map"></div>
-                    <div class="chip">
-                        Time to work: <span class="sensor" entity-id="sensor.time_to_work">&nbsp;</span> minutes
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div id="hidden-sensors">
+    <span class="sensor" entity-id="sensor.ups">&nbsp;</span>
+    <span class="sensor" entity-id="sensor.fedex">&nbsp;</span>
+    <span class="sensor" entity-id="sensor.usps_mail">&nbsp;</span>
+    <span class="sensor" entity-id="sensor.usps_packages">&nbsp;</span>
 </div>

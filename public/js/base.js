@@ -1,8 +1,19 @@
 $(document).ready(function(){
     $('#cube').cubify();
+
     $('#traffic .map').traffic({
         'apiKey': _global_credentials['google-maps-apikey'],
         'location': _global_credentials['traffic-location']
+    });
+
+    $('#notices').notices({
+        'persist': [
+            {
+                'type': 'directions_car', 
+                'message': 'It will currently take <span class="sensor" entity-id="sensor.time_to_work"/> minutes to get to work',
+                'priority': 'top'
+            }
+        ]
     });
 
     $('#floorplan').floorplan({

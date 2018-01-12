@@ -139,7 +139,7 @@
   /* FIXME: I'm *really really* sorry that this code is so gross. Really, I am.
    * I'll try to clean it up eventually! Promise! */
   var KEYFRAME = 500,
-      STROKE = 0.08,
+      STROKE = 0.04,
       TAU = 2.0 * Math.PI,
       TWO_OVER_SQRT_2 = 2.0 / Math.sqrt(2);
 

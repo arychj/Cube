@@ -1,10 +1,18 @@
+#hidden-sensors{
+    display: none;
+}
+
 #date{
     color: #666666;
-    font-size: 20px;
+    font-size: 27px;
+    font-weight: 300;
+    height: 35px;
 }
 
 #time{
-    font-size: 36px;
+    font-size: 60px;
+    font-weight: 100;
+    height: 80px;
 }
 
 #weather{
@@ -20,9 +28,15 @@
     vertical-align: middle;
 }
 
-#weather img{
+#weather .icons img{
     vertical-align: middle;
     height: 35px;
+    margin-left: 5px;
+}
+
+#weather .icons .sensor{
+    color: #666666;
+    font-size: 20px;
 }
 
 #weather .sensor[entity-id$=icon]{
@@ -31,6 +45,7 @@
 
 #weather .sensor[entity-id$=temperature]{
     font-size: 60px;
+    font-weight: 100;
 }
 
 #weather .sensor[entity-id$=high_temperature],
@@ -38,28 +53,22 @@
     text-align: center;
     color: #333333;
     font-size: 30px;
+    font-weight: normal;
 }
 
 #weather .sensor[entity-id$=temperature]::after{
     content: '\00b0';
 }
 
-#weather .sensor[entity-id$=wind_speed],
-#weather .sensor[entity-id$=wind_bearing],
-#weather .sensor[entity-id$=sunrise],
-#weather .sensor[entity-id$=sunset]{
-    color: #666666;
-    font-size: 25px;
-}
-
 #weather .sensor[entity-id$=wind_bearing]{
     /* vertical-align: super;*/
 }
 
-#weather .sensor[entity-id$=summary]{
-    font-size: 20px;
+#weather .summary{
+    font-size: 16px;
     color: #666666;
-    text-align: center;
+    text-align: justify;
+    text-align-last: right;
 }
 
 #traffic{
@@ -70,5 +79,9 @@
     margin: auto;
     height: 350px;
     width: 350px;
-    -webkit-filter: invert(100%) grayscale(100%);
+    border: 1px #333333 solid;
+}
+
+#traffic .map .gm-style>div:not([tabindex]){
+    display: none;
 }

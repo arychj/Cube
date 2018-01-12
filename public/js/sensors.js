@@ -8,7 +8,7 @@
 
         acceptParameters(params);
 
-        _skycons = new Skycons({"color": "#bbbbbb"});
+        _skycons = new Skycons({"color": "#dddddd"});
         _skycons.play();
 
         setupSensors();
@@ -59,6 +59,74 @@
                     var date = moment(state).format('HH:mm');
                     $(this).html(date);
                 });
+            }
+            else if(type == 'dark_sky_summary'){
+                bind(this, function(state){
+                    state = state.toLowerCase();
+                    if(state.split(' ').length <= 2){
+                        if(!state.endsWith('y')){
+                            if(state.endsWith('e')){
+                                state = state.slice(0, -1);
+                            }
+
+                            state = state + 'ing';
+                        }
+                    }
+
+                    state = 'Currently ' + state + '.';
+                    $(this).html(state);
+                });
+            }
+            else if(type == 'dark_sky_precip_probability'){
+                bind(this, function(state){
+                    state = parseInt(state) + '%';
+                    $(this).html(state);
+                });
+            }
+            else if(['ups', 'fedex'].includes(type)){
+                bind(this, function(state){
+                    count = parseInt(state);
+                    if(count > 0){
+                        $.notices.add({
+                            'type': type,
+                            'message': 
+                                'There ' + 
+                                (count == 1 ? 'is' : 'are') +
+                                ' ' + count +
+                                ' package' + (count == 1 ? '' : 's') + 
+                                ' arriving today via ' + 
+                                (type == 'fedex' ? 'FedEx' : type.toUpperCase())
+                        });
+
+                        $(this).html(count);
+                    }
+                    else{
+                        $.notices.remove(type);
+                    }
+                });
+            }
+            else if(type.startsWith('usps')){
+                bind(this, function(state){
+                    count = parseInt(state);
+                    if(count > 0){
+                        $.notices.add({
+                            'type': type,
+                            'icon': 'usps',
+                            'message': 
+                                'There ' + 
+                                (count == 1 ? 'is' : 'are') +
+                                ' ' + count +
+                                ' ' + (type.endsWith('mail') ? 'letter' : 'package') + (count == 1 ? '' : 's') + 
+                                ' arriving today via USPS'
+                        });
+
+                        $(this).html(count);
+                    }
+                    else{
+                        $.notices.remove(type);
+                    }
+                });
+
             }
             else{
                 bind(this, function(state){
