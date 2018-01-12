@@ -38,33 +38,38 @@
             disableDoubleClickZoom: true,
             styles: [
                 {
-                    "featureType": "transit",
-                    "elementType": "labels",
-                    "stylers": [
-                        { "visibility": "off" }
-                    ]
+                    elementType: 'geometry', 
+                    stylers: [{color: '#000000', fill: '#000000'}]
                 },
                 {
-                    "featureType": "administrative.neighborhood",
-                    "elementType": "labels",
-                    "stylers": [
-                        { "visibility": "off" }
-                    ]
+                    elementType: 'labels.text.stroke', 
+                    stylers: [{color: '#242f3e'}]
                 },
                 {
-                    "featureType": "administrative.land_parcel",
-                    "elementType": "labels",
-                    "stylers": [
-                        { "visibility": "off" }
-                    ]
+                    featureType: 'road.highway', 
+                    elementType: 'geometry', 
+                    stylers: [{color: '#666666', fill: '#666666'}]
                 },
-                {elementType: 'geometry', stylers: [{color: '#000000', fill: '#000000'}]},
-                {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
                 {   
                   featureType: 'administrative.locality',
                   elementType: 'labels.text.fill',
                   stylers: [{color: '#ffffff'}]
                 },
+                {
+                    featureType: 'transit',
+                    elementType: 'labels',
+                    stylers: [{ visibility: 'off' }]
+                },
+                {
+                    featureType: 'administrative.neighborhood',
+                    elementType: 'labels',
+                    stylers: [{ visibility: 'off' }]
+                },
+                {
+                    featureType: 'administrative.land_parcel',
+                    elementType: 'labels',
+                    stylers: [{ visibility: 'off' }]
+                }
             ]
         });
 	}
