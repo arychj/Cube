@@ -12,8 +12,8 @@
         add: function(details){
             _interface.remove(details.type);
 
-            var icon = ('icon' in details ? details.icon : details.type);
-            var notice = createNotice(icon, details.message, ('persist' in details ? details.persist : false));
+            var symbol = ('symbol' in details ? details.symbol : details.type);
+            var notice = createNotice(details.type, symbol, details.message, ('persist' in details ? details.persist : false));
 
             if(('priority' in details) && (details.priority == 'top')){
                 $(_notices).prepend(notice);
@@ -54,20 +54,20 @@
         _icons = $.extend(true, _icons, params['icons']);
     }
 
-    function createNotice(type, message, persist){
+    function createNotice(type, symbol, message, persist){
         var icon = '*';
-        if(type in _icons){
+        if(symbol in _icons){
             icon = $('<img/>').attr({
-                    'src': _icons[type]
+                    'src': _icons[symbol]
                 });
         }
         else{
             icon = $('<i/>')
                 .addClass('material-icons')
-                .html(type);
+                .html(symbol);
         }
 
-        var notice = $('<li>')
+        var notice = $('<li/>')
                 .attr('notice-type', type)
                 .append(
                     $('<div/>')

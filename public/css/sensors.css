@@ -28,6 +28,10 @@
     vertical-align: middle;
 }
 
+#weather .icons{
+    padding: 0;
+}
+
 #weather .icons img{
     vertical-align: middle;
     height: 35px;
@@ -36,7 +40,7 @@
 
 #weather .icons .sensor{
     color: #666666;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 #weather .sensor[entity-id$=icon]{

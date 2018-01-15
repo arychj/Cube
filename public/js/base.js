@@ -9,7 +9,8 @@ $(document).ready(function(){
     $('#notices').notices({
         'persist': [
             {
-                'type': 'directions_car', 
+                'type': 'time-to-work',
+                'symbol': 'directions_car', 
                 'message': 'It will currently take <span class="sensor" entity-id="sensor.time_to_work"/> minutes to get to work',
                 'priority': 'top'
             }

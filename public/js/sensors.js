@@ -62,16 +62,25 @@
             }
             else if(type == 'dark_sky_summary'){
                 bind(this, function(state){
-                    state = state.toLowerCase();
-                    if(state.split(' ').length <= 2){
-                        if(!state.endsWith('y')){
-                            if(state.endsWith('e')){
-                                state = state.slice(0, -1);
+                    state = state.toLowerCase().split(' ');
+                    if(state.length <= 2){
+                        var last = state.length - 1;
+                        if(!state[last].endsWith('y')){
+                            if(state[last].endsWith('e')){
+                                state = state[last].slice(0, -1);
                             }
 
-                            state = state + 'ing';
+                            state[last] = state[last] + 'ing';
+                        }
+
+                        if(state.length == 2){
+                            if(state[0] == 'light'){
+                                state[0] = state[0] + 'ly';
+                            }
                         }
                     }
+
+                    state = state.join(' ');
 
                     state = 'Currently ' + state + '.';
                     $(this).html(state);
@@ -106,12 +115,13 @@
                 });
             }
             else if(type.startsWith('usps')){
+                console.log('usps sensor: ' + type);
                 bind(this, function(state){
                     count = parseInt(state);
                     if(count > 0){
                         $.notices.add({
                             'type': type,
-                            'icon': 'usps',
+                            'symbol': 'usps',
                             'message': 
                                 'There ' + 
                                 (count == 1 ? 'is' : 'are') +
