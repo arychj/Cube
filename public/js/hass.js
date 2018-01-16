@@ -4,6 +4,9 @@
 
     var _socket = null;
     var _isOpen = false;
+    var _connectionMonitor = null;
+    var _connectionMonitorInterval = 1000;
+
     var _watchedEntities = {};
     var _sequenceId = 0;
     var _sequenceCallbacks = {};
@@ -30,19 +33,33 @@
     }
 
     function connect(){
+        console.log('Connecting to HASS...');
+
         _socket = new WebSocket('ws://' + _host + '/api/websocket');
-
         authenticate(_password);
+        startConnectionMonitor();
 
+        _socket.onmessage = receiveMessage;
+    }
+
+    function startConnectionMonitor(){
         _socket.addEventListener('open', function(event){
+            console.log('HASS connection established...');
             _isOpen = true;
         });
 
-        _socket.addEventListener('false', function(event){
+        _socket.addEventListener('close', function(event){
+            console.log('HASS connection lost...');
             _isOpen = false;
         });
 
-        _socket.onmessage = receiveMessage;
+        if(_connectionMonitor == null){
+            _connectionMonitor = setInterval(function(){
+                if(!_isOpen){
+                    connect();
+                }
+            }, _connectionMonitorInterval);
+        }
     }
 
     function authenticate(password){
