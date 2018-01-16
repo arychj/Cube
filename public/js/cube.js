@@ -1,15 +1,22 @@
 (function($){
     var _cube = null;
+    var _defaultFace = null;
 
     var _isAnimating = false;
     var _endCurrentAnimation = false;
     var _endNextAnimation = false;
 
+    var _resetTimeout = null;
+    var _resetTimer = null;
+
     function init(params){
         console.log('Initializing cube...');
 
+        acceptParameters(params);
+
         var faces = $(this).find('[cube-face]');
         if(faces.length == 6){
+            _defaultFace = $(faces).first();
             _cube = generateCubeRotationGraph(faces);
         }
         else{
@@ -18,22 +25,37 @@
 
         addEventListeners();
 
-	    show($('[cube-face]').first());
+	    show();
 
         return this;
     }
 
     function acceptParameters(params){
-        $.event.special.swipe.horizontalDistanceThreshold = params['horizontalSwipeThreshold'];
-        $.event.special.swipe.verticalDistanceThreshold = params['verticalSwipeThreshold'];
+        _resetTimeout = params['resetTimeout'] * 1000;
     }
 
     function show(face){
+        if(typeof face === 'undefined'){
+            face = _defaultFace;
+        }
+
         $('[cube-face]').fadeOut().removeAttr('cube-face-current');
 	    $(face).attr({'cube-face-current': ''}).fadeIn();
 
         $('.cube-map-face').removeClass('active');
         $('.cube-map-face[cube-face-show=' + $(face).attr('cube-face') + ']').addClass('active');
+
+        setResetTimer();
+    }
+
+    function setResetTimer(){
+        if(_resetTimer != null){
+            clearTimeout(_resetTimer);
+        }
+
+        if(!$('[cube-face-current]').is($(_defaultFace))){
+            _resetTimer = setTimeout(function(){ show(); }, _resetTimeout);
+        }
     }
 
     function rotate(event){
@@ -176,11 +198,12 @@
     }
 
     $.fn.cubify = function(){
-        arguments[0] = $.extend(true,{
-            'horizontalSwipeThreshold': '40px',
-            'verticalSwipeThreshold': '75px'
-        }, arguments[0]);
+        var args = (arguments.length == 0 ? [{}] : arguments);
 
-        return init.apply(this, arguments);
+        args[0] = $.extend(true,{
+            'resetTimeout': 2 * 60
+        }, args[0]);
+
+        return init.apply(this, args);
     };
 })(jQuery);
