@@ -29,7 +29,7 @@
             $(notice).fadeIn();
         },
         remove: function(type){
-            $(_notices).find('li[notice-type=' + type + ']').fadeOut(function(){
+            $(_notices).find('li[notice-type^=' + type + ']').fadeOut(function(){
                 $(this).remove();
             });
         }

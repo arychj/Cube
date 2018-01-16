@@ -4,7 +4,7 @@
 }
 
 #notices li{
-    height: 30px;
+    min-height: 30px;
     margin-bottom: 5px;
     display: none;
 }
@@ -28,15 +28,17 @@
    height: 20px;
 }
 
-
 #notices li .icon{
     display: inline-block;
-    width: 65px;
+    width: 17%;
+    min-width: 65px;
     text-align: center;
+    vertical-align: top;
 }
 
 #notices li .message{
     display: inline-block;
+    width: 83%;
     color: #666666;
     font-size: 16px;
 }
