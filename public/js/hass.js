@@ -5,18 +5,18 @@
     var _socket = null;
     var _isOpen = false;
     var _connectionMonitor = null;
-    var _connectionMonitorInterval = 1000;
+    var _connectionMonitorInterval = 10 * 1000;
 
     var _watchedEntities = {};
     var _sequenceId = 0;
     var _sequenceCallbacks = {};
+    var _preSequenceCallbacks = [];
 
     function init(params){
         acceptParameters(params);
         discoverEntities();
-        connect();
-        subscribe();
-        getStates();
+
+        startConnectionMonitor();
 
         $(this).find('.control[entity-id]').on('click', controlClick);
 
@@ -32,20 +32,39 @@
         _logEventsToConsole = params['logEventsToConsole'];
     }
 
-    function connect(){
-        console.log('Connecting to HASS...');
-
-        _socket = new WebSocket('ws://' + _host + '/api/websocket');
-        authenticate(_password);
-        startConnectionMonitor();
-
-        _socket.onmessage = receiveMessage;
+    function startConnectionMonitor(){
+        setupConnection();
+        _connectionMonitor = setInterval(setupConnection, _connectionMonitorInterval);
     }
 
-    function startConnectionMonitor(){
+    function setupConnection(){
+        if(!_isOpen){
+            connect(function(){
+                subscribe();
+                getStates();
+            });
+        }
+    }
+
+    function connect(callback){
+        if((_socket == null) || (_socket.readyState == 3)){
+        console.log('Connecting to HASS...');
+
+        _sequenceId = 0;
+        _sequenceCallbacks = {};
+        _preSequenceCallbacks = [];
+
+        _socket = new WebSocket('ws://' + _host + '/api/websocket');
+
         _socket.addEventListener('open', function(event){
             console.log('HASS connection established...');
             _isOpen = true;
+
+            authenticate(_password, function(){
+                if(typeof callback != 'undefined'){
+                    callback();
+                }
+            });
         });
 
         _socket.addEventListener('close', function(event){
@@ -53,20 +72,15 @@
             _isOpen = false;
         });
 
-        if(_connectionMonitor == null){
-            _connectionMonitor = setInterval(function(){
-                if(!_isOpen){
-                    connect();
-                }
-            }, _connectionMonitorInterval);
+        _socket.onmessage = receiveMessage;
         }
     }
 
-    function authenticate(password){
-        sendMessage('{"type": "auth","api_password": "' + password + '"}\n');
+    function authenticate(password, callback){
+        sendMessage({'type': 'auth', 'api_password': password}, callback, true, true);
     }
 
-    function subscribe(){
+    function subscribe(callback){
         sendMessage({'type': 'subscribe_events', 'event_type': 'state_changed'}, function(message){
             var event = parseEvent(message);
             logEvent(event);
@@ -129,35 +143,48 @@
             console.log(message);
         }
 
-        if(message.id in _sequenceCallbacks){
+        if(('id' in message) && (message.id in _sequenceCallbacks)){
             _sequenceCallbacks[message.id].callback(message);
             if(_sequenceCallbacks[message.id].deleteAfterUse){
                 delete _sequenceCallbacks[message.id];
             }
         }
+        else if(_preSequenceCallbacks.length > 0){
+            for(var i = 0; i < _preSequenceCallbacks.length; i++){
+                _preSequenceCallbacks[i].callback(message);
+            }
+
+            _preSequenceCallbacks = [];
+        }
     }
 
-    function sendMessage(message, callback, deleteAfterUse){
-        if (typeof message !== 'string'){
-            message['id'] = getSequenceId();
-        }
-
+    function sendMessage(message, callback, deleteAfterUse, isPreSequenceMessage){
         if(_isOpen){
-            if(typeof message !== 'string'){
+            if ((typeof isPreSequenceMessage != 'undefined') && isPreSequenceMessage){
+                if(typeof callback !== 'undefined'){
+                    _preSequenceCallbacks.push({
+                        'callback': callback,
+                        'deleteAfterUse': (typeof deleteAfterUse === 'undefined' ? true : deleteAfterUse)
+                    });
+                }
+            }
+            else{
+                message['id'] = getSequenceId();
+
                 if(typeof callback !== 'undefined'){
                     _sequenceCallbacks[message['id']] = {
                         'callback': callback,
                         'deleteAfterUse': (typeof deleteAfterUse === 'undefined' ? true : deleteAfterUse)
                     }
                 }
-
-                message = JSON.stringify(message);
             }
+
+            message = JSON.stringify(message);
 
             _socket.send(message);
         }
         else{
-            setTimeout(function(){ sendMessage(message, callback, deleteAfterUse); }, 500);
+            setTimeout(function(){ sendMessage(message, callback, deleteAfterUse, isPreSequenceMessage); }, 500);
         }
     }
 
@@ -222,7 +249,12 @@
             var message = formatTimestamp(event.time_fired) + ': ' + event.data.entity_id + ' ';
 
             if(('old_state' in event.data) && ('new_state' in event.data)){
-                message += '(' + event.data.old_state.state + ' -> ' + event.data.new_state.state + ')';
+                if(event.data.old_state != null){
+                    message += '(' + event.data.old_state.state + ' -> ' + event.data.new_state.state + ')';
+                }
+                else{
+                    message += '(' + event.data.new_state.state + ')';
+                }
             }
             else{
                 message += '(' + event.data.state + ')';
