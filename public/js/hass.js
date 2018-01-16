@@ -16,6 +16,7 @@
         acceptParameters(params);
         discoverEntities();
 
+        setupConnection();
         startConnectionMonitor();
 
         $(this).find('.control[entity-id]').on('click', controlClick);
@@ -33,7 +34,6 @@
     }
 
     function startConnectionMonitor(){
-        setupConnection();
         _connectionMonitor = setInterval(setupConnection, _connectionMonitorInterval);
     }
 
@@ -48,31 +48,34 @@
 
     function connect(callback){
         if((_socket == null) || (_socket.readyState == 3)){
-        console.log('Connecting to HASS...');
+            console.log('Connecting to HASS...');
+            $('#connection-status').addClass('connecting');
 
-        _sequenceId = 0;
-        _sequenceCallbacks = {};
-        _preSequenceCallbacks = [];
+            _sequenceId = 0;
+            _sequenceCallbacks = {};
+            _preSequenceCallbacks = [];
 
-        _socket = new WebSocket('ws://' + _host + '/api/websocket');
+            _socket = new WebSocket('ws://' + _host + '/api/websocket');
 
-        _socket.addEventListener('open', function(event){
-            console.log('HASS connection established...');
-            _isOpen = true;
+            _socket.addEventListener('open', function(event){
+                console.log('HASS connection established...');
+                $('#connection-status').removeClass('connecting');
+                _isOpen = true;
 
-            authenticate(_password, function(){
-                if(typeof callback != 'undefined'){
-                    callback();
-                }
+                authenticate(_password, function(){
+                    if(typeof callback != 'undefined'){
+                        callback();
+                    }
+                });
             });
-        });
 
-        _socket.addEventListener('close', function(event){
-            console.log('HASS connection lost...');
-            _isOpen = false;
-        });
+            _socket.addEventListener('close', function(event){
+                console.log('HASS connection lost...');
+                $('#connection-status').addClass('connecting');
+                _isOpen = false;
+            });
 
-        _socket.onmessage = receiveMessage;
+            _socket.onmessage = receiveMessage;
         }
     }
 
@@ -151,7 +154,7 @@
         }
         else if(_preSequenceCallbacks.length > 0){
             for(var i = 0; i < _preSequenceCallbacks.length; i++){
-                _preSequenceCallbacks[i].callback(message);
+                _preSequenceCallbacks[i](message);
             }
 
             _preSequenceCallbacks = [];
@@ -162,10 +165,7 @@
         if(_isOpen){
             if ((typeof isPreSequenceMessage != 'undefined') && isPreSequenceMessage){
                 if(typeof callback !== 'undefined'){
-                    _preSequenceCallbacks.push({
-                        'callback': callback,
-                        'deleteAfterUse': (typeof deleteAfterUse === 'undefined' ? true : deleteAfterUse)
-                    });
+                    _preSequenceCallbacks.push(callback);
                 }
             }
             else{
@@ -249,11 +249,13 @@
             var message = formatTimestamp(event.time_fired) + ': ' + event.data.entity_id + ' ';
 
             if(('old_state' in event.data) && ('new_state' in event.data)){
-                if(event.data.old_state != null){
-                    message += '(' + event.data.old_state.state + ' -> ' + event.data.new_state.state + ')';
-                }
-                else{
-                    message += '(' + event.data.new_state.state + ')';
+                if(event.data.new_state != null){
+                    if(event.data.old_state != null){
+                        message += '(' + event.data.old_state.state + ' -> ' + event.data.new_state.state + ')';
+                    }
+                    else{
+                        message += '(' + event.data.new_state.state + ')';
+                    }
                 }
             }
             else{

@@ -83,3 +83,40 @@ body{
 .title.right{
     text-align: right;
 }
+
+#connection-status{
+    display: none;
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+    height: 200px;
+    width: 200px;
+    background-color: #FFFFFF;
+    background-image: url(../img/loading-icons/cube.gif); /* https://dribbble.com/shots/3129814-Loading-2 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: invert(100%) saturate(0%) brightness(50%);
+    z-index: 9999;
+    text-transform: uppercase;
+    padding: 15px;
+}
+
+#connection-status:after {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    animation: ellipsis steps(4,end) 1800ms infinite;
+    content: "\2026"; /* ascii code for the ellipsis character */
+    width: 0px;
+}
+
+#connection-status.connecting{
+    display: block;
+}
+
+@keyframes ellipsis {
+    to {
+        width: 1em; 
+    }
+}
