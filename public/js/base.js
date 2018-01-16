@@ -31,6 +31,7 @@ $(document).ready(function(){
         'onReady': function(){
             $('.sensor').sensor();
             $('.control').control();
+            $('.camera').camera({'baseurl': 'http://' + _global_credentials['hass-host']});
 
             $('#cube').hass({
                 'host': _global_credentials['hass-host'], 

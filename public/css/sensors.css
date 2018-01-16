@@ -89,3 +89,7 @@
 #traffic .map .gm-style>div:not([tabindex]){
     display: none;
 }
+
+.camera img{
+    width: 100%;
+}

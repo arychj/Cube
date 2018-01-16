@@ -58,7 +58,8 @@
                 var id = event.data.entity_id;
                 if(id in _watchedEntities){
                     var state = event.data.new_state.state;
-                    setState(id, state);
+                    var attributes = event.data.new_state.attributes;
+                    setState(id, state, attributes);
                 }
 
             }
@@ -69,22 +70,26 @@
         sendMessage({'type': 'get_states'}, function(event){
             $(event.result).each(function(index){
                 if(this.entity_id in _watchedEntities){
-                    setState(this.entity_id, this.state);
+                    setState(this.entity_id, this.state, this.attributes);
                 }
             });
         });
     }
 
-    function setState(id, state){
+    function setState(id, state, attributes){
         var type = getTypeFromId(id);
         switch(type){
             case 'sensor':
                 var sensor = getSensor(id);
-                $(sensor).trigger('update-state', {'state': state});
+                $(sensor).trigger('update-state', {'state': state, 'attributes': attributes});
+                break;
+            case 'camera':
+                var camera = getCamera(id);
+                $(camera).trigger('update-state', {'state': state, 'attributes': attributes});
                 break;
             default:
                 var control = getControl(id);
-                $(control).trigger('update-state', {'state': state});
+                $(control).trigger('update-state', {'state': state, 'attributes': attributes});
                 break;
         }
     }
@@ -158,6 +163,10 @@
         return $('.sensor[entity-id="' + id + '"]');
     }
 
+    function getCamera(id){
+        return $('.camera[entity-id="' + id + '"]');
+    }
+
     function parseEvent(message){
         if(message.success === 'false'){
             log(message.error.message);
@@ -179,7 +188,7 @@
     function discoverEntities(){
         _watchedEntities = {}
 
-        $('.control[entity-id],.sensor[entity-id]').each(function(index){
+        $('.control[entity-id],.sensor[entity-id],.camera[entity-id]').each(function(index){
             var entityId = $(this).attr('entity-id');
             if(!(entityId in _watchedEntities)){
                 _watchedEntities[entityId] = [];
@@ -193,16 +202,16 @@
 
     function logEvent(event){
         if(event.type == 'event'){
-            log(
-                formatTimestamp(event.time_fired) + 
-                ': ' + 
-                event.data.entity_id + 
-                ' (' + 
-                event.data.old_state.state + 
-                ' -> ' + 
-                event.data.new_state.state + 
-                ')'
-            );
+            var message = formatTimestamp(event.time_fired) + ': ' + event.data.entity_id + ' ';
+
+            if(('old_state' in event.data) && ('new_state' in event.data)){
+                message += '(' + event.data.old_state.state + ' -> ' + event.data.new_state.state + ')';
+            }
+            else{
+                message += '(' + event.data.state + ')';
+            }
+
+            log(message);
         }
         else{
             log(
