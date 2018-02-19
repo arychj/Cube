@@ -1,0 +1,52 @@
+#notices {
+    margin: 0;
+    list-style-type: none;
+}
+
+#notices li{
+    min-height: 30px;
+    margin-bottom: 5px;
+    display: none;
+}
+
+#notices li i{
+    color: #999999;
+    vertical-align: middle;
+}
+
+#notices li img {
+    height: 15px;
+    filter: grayscale(100%);
+    vertical-align: middle;
+}
+
+#notices li img[src*=usps]{
+    filter: grayscale(100%) invert(100%);
+}
+
+#notices li img[src*=ups]{
+   height: 20px;
+}
+
+#notices li .icon{
+    display: inline-block;
+    width: 17%;
+    min-width: 65px;
+    text-align: center;
+    vertical-align: top;
+}
+
+#notices li .details{
+    display: inline-block;
+    width: 83%;
+    color: #666666;
+    font-size: 16px;
+}
+
+#notices li .message{
+
+}
+
+#notices li .description{
+    color: #333333;
+}
