@@ -130,4 +130,3 @@
 #notices [notice-type^='traffic-incident'] .delay::after{
     content: ')';
 }
-

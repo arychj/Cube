@@ -56,6 +56,11 @@
     border: 1px solid #FFF;
 }
 
+.cube-map-face:hover{
+    cursor: pointer;
+    color: #FFF;
+}
+
 .cube-map-face[cube-face-show=top], .cube-map-face[cube-face-show=bottom]{
     margin-left: 19px;
 }

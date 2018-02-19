@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('#cube').cubify();
     $('#notices').notices();
+
     $('#traffic .map').traffic({
         'apiKey': _global_credentials['google-maps-apikey'],
         'location': _global_credentials['traffic-location']
@@ -20,7 +21,6 @@ $(document).ready(function(){
             '[id=stairs]': 'light.stair'
         },
         'onReady': function(){
-
             $('#cube').hass({
                 'host': _global_credentials['hass-host'], 
                 'password': _global_credentials['hass-password'],
