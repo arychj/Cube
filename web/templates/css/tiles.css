@@ -1,0 +1,24 @@
+.tile{
+    border-radius: 5px;
+    border: 2px solid #FFF;
+    font-weight: bold;
+    padding: 0;
+}
+
+.tile .row, .tile .col{
+    margin: 0;
+    padding: 0;
+}
+
+.tile .control{
+    height: 100%;
+    padding-left: 10px;
+    border: 1px solid #333;
+}
+
+.control[entity-id^=light].active{
+    color: #000;
+    background-color: #f4c242;
+    fill: #f4c242;
+}
+

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/css/cube.css" />    
+{% endblock %}
+
+{% block body %}
+<div id="cube" class="pt-perspective">
+    {% include 'cube/front.html' %}
+    {% include 'cube/back.html' %}
+    {% include 'cube/top.html' %}
+    {% include 'cube/bottom.html' %}
+    {% include 'cube/left.html' %}
+    {% include 'cube/right.html' %}
+</div>
+{% include 'cube-map.html' %}
+{% endblock %}
+
+{% block js %}
+    <script src="/js/cube.js"></script>
+{% endblock %}
