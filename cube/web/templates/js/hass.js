@@ -58,7 +58,7 @@
     function connect(callback){
         if((_socket == null) || (_socket.readyState == 3)){
             console.log('Connecting to HASS...');
-            $('#connection-status').addClass('connecting');
+            $('#connection-status').dweetimate();
 
             _sequenceId = 0;
             _sequenceCallbacks = {};
@@ -68,7 +68,7 @@
 
             _socket.addEventListener('open', function(event){
                 console.log('Established connection to HASS...');
-                $('#connection-status').removeClass('connecting');
+                $('#connection-status').dweetistop();
                 _isOpen = true;
 
                 authenticate(_password, function(){
