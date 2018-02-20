@@ -1,6 +1,0 @@
-parameters:
-    weather.provider: 'forecastio'
-    weather.api_url: 'https://api.forecast.io/forecast'
-    weather.api_key: ''
-    weather.location: 'long,lat'
-
