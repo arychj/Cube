@@ -36,6 +36,16 @@ class CubeServer():
 
             return self._assets_directory
 
+        def get_template(self, template):
+            try:
+                templates = os.path.normpath(os.path.join(os.path.dirname(__file__), args.templates))
+                jinja = jinja2.Environment(loader=jinja2.FileSystemLoader(templates), trim_blocks=True)
+                contents = jinja.get_template(template).render(self.get_parameters())
+
+                return contents
+            except jinja2.exceptions.TemplateNotFound:
+                return None
+
         def do_GET(self):
             response = 500
             mimetype = "text/plain"
@@ -65,20 +75,19 @@ class CubeServer():
                     response = 404
                     contents = "shennaigans"
             else:
-                try:
-                    if self.path.endswith("/"):
-                        path = self.path + "index.html"
-                    else:
-                        path = self.path
+                if self.path.endswith("/"):
+                    path = self.path + "index.html"
+                else:
+                    path = self.path
 
-                    jinja = jinja2.Environment(loader=jinja2.FileSystemLoader(args.templates), trim_blocks=True)
-
-                    response = 200
-                    mimetype = mime.guess_type(path)[0]
-                    contents = jinja.get_template(path).render(self.get_parameters())
-                except jinja2.exceptions.TemplateNotFound:
+                contents = self.get_template(path)
+                if contents == None:
                     response = 404
                     contents = "template not found"
+                else:
+                    response = 200
+                    mimetype = mime.guess_type(path)[0]
+
 
             if isinstance(contents, str):
                 contents = contents.encode("utf-8")

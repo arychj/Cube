@@ -11,5 +11,4 @@
 *.bak
 *.old
 
-*credentials.js
-*parameters.yaml
+*parameters.json
