@@ -13,13 +13,14 @@
 
             var notice = createNotice(
                 details.type, 
+                ('priority' in details ? details.priority : null),
                 ('symbol' in details ? details.symbol : details.type),
                 details.message,
                 ('description' in details ? details.description : null),
                 ('persist' in details ? details.persist : false)
             );
 
-            if(('priority' in details) && (details.priority == 'top')){
+            if(('precedence' in details) && (details.precedence == 'top')){
                 $(_notices).prepend(notice);
             }
             else{
@@ -52,7 +53,7 @@
         _icons = $.extend(true, _icons, params['icons']);
     }
 
-    function createNotice(type, symbol, message, description, persist){
+    function createNotice(type, priority, symbol, message, description, persist){
         var icon = '*';
         if(symbol in _icons){
             icon = $('<img/>').attr({
@@ -89,6 +90,13 @@
                         .append(icon)
                 )
                 .append(details);
+
+        if(priority == 'high'){
+            $(notice).addClass('priority');
+        }
+        else if(priority == 'urgent'){
+            $(notice).addClass('priority urgent');
+        }
 
         if(persist){
             $(notice).attr('notice-persist', '');

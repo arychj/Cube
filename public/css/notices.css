@@ -50,3 +50,23 @@
 #notices li .description{
     color: #333333;
 }
+
+#notices .priority i {
+    color: #fff;
+}
+
+#notices .priority .details{
+    color: #fff;
+}
+
+#notices .priority .description{
+    color: #ccc;
+}
+
+#notices .priority.urgent{
+    animation: blinker 2.5s linear infinite;
+}
+
+@keyframes blinker{
+      50% { opacity: 0.25; }
+}
