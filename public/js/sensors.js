@@ -213,11 +213,17 @@
                     $.notices.remove('trash-day');
 
                     if(state == 'yes'){
-                        $.notices.add({
+                        var notice = {
                             'type': 'trash-day',
                             'symbol': 'delete',
-                            'message': 'Tomorrow is trash day',
-                        });
+                            'message': 'Tomorrow is trash day'
+                        };
+
+                        if(moment().format('HH:mm') >= '19:00'){
+                            notice['priority'] = 'urgent';
+                        }
+
+                        $.notices.add(notice);
                     }
                 });
             }
@@ -270,9 +276,9 @@
                 bind(this, function(state){
                     $.notices.add({
                         'type': type,
+                        'precedence': 'top',
                         'symbol': 'directions_car',
-                        'message': 'It will currently take ' + state + ' minutes to get to work',
-                        'priority': 'top'
+                        'message': 'It will currently take ' + state + ' minutes to get to work'
                     });
                 
                     $(this).html(state);
