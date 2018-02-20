@@ -1,8 +1,16 @@
 {
+    "hass": {
+        "host": "homeassistant:8123", 
+        "password": ""
+    },  
     "weather": {
         "provider": "forecastio",
         "api_url": "https://api.forecast.io/forecast",
         "api_key": "",
         "location": "latitude,longitude"
     }
+    "traffic": {
+        "apikey": "",
+        "location": "latitude,longitude"
+    }   
 }
