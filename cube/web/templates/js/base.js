@@ -1,6 +1,13 @@
 $(document).ready(function(){
     $('#cube').cubify();
-    $('#notices').notices();
+
+    $('#notices').notices({
+        'icons': {
+            'fedex': 'assets/img/mail-icons/fedex.svg',
+            'ups': 'assets/img/mail-icons/ups.svg',
+            'usps': 'assets/img/mail-icons/usps.svg'
+        }
+    });
 
     $('#traffic .map').traffic({
         'apiKey': _global_credentials['google-maps-apikey'],
