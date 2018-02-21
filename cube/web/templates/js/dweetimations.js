@@ -10,8 +10,8 @@
         },
         'snow-cube': {
             'author': 'https://www.dwitter.net/d/2565', // customized
-            'dweet': function(c){
-                for(a=c.width|=l=C(t),m=S(t)*2.5;a--;x.fillRect((d*l-S(a)*m)*h+960,(g*l-f*m)*h+520,h/=65,h))d=S(a*(f=C(a*a))),g=d*m+S(a)*l,h=800/(4+g*m+f*l)
+            'dweet': function(c, x){
+                for(a=c.width|=l=C(t),m=S(t)*2.5;a--;x.fillRect((d*l-S(a)*m)*h+960,(g*l-f*m)*h+520,h/=65,h))d=S(a*(f=C(a*a))),g=d*m+S(a)*l,h=800/(4+g*m+f*l);
             }
         }
     };
@@ -51,19 +51,20 @@
     }
 
     function dweet(c, f){
-        with(Math)S=sin,C=cos,T=tan;
-        x=c.getContext("2d");
-        frame=0;
+        var frame = 0;
+        var x = c.getContext('2d');
 
-        function u(){
-            if(c.play){
-                t = ++frame/120;
-                f(c);
-                requestAnimationFrame(u);
+        with(S=Math.sin, C=Math.cos, T=Math.tan){
+            function u(){
+                if(c.play){
+                    t = ++frame / 120;
+                    f(c, x);
+                    requestAnimationFrame(u);
+                }
             }
-        }
 
-        u();
+            u();
+        }
     }
 
     $.fn.dweetimate = function(){
