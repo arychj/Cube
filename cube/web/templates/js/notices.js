@@ -2,9 +2,9 @@
     var _notices;
 
     var _icons = {
-        'fedex': 'img/mail-icons/fedex.svg',
-        'ups': 'img/mail-icons/ups.svg',
-        'usps': 'img/mail-icons/usps.svg'
+        'fedex': 'assets/img/mail-icons/fedex.svg',
+        'ups': 'assets/img/mail-icons/ups.svg',
+        'usps': 'assets/img/mail-icons/usps.svg'
     };
 
     var _interface = {
