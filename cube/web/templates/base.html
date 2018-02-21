@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}C3{% endblock %}</title>
+        <title>{% block title %}C&sup3;{% endblock %}</title>
         <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
 
         <meta charset="UTF-8">
@@ -22,7 +22,9 @@
     <body>
         {% block body %}{% endblock %}
         
-        <div id="connection-status">Connecting</div>
+        <div id="connection-status" dweetimation="snow-cube">
+            <div class="status">Connecting</div>
+        </div>
 
         <script src="/assets/js/jquery-1.11.1.min.js"></script>
         <script src="/assets/js/jquery.mobile-1.4.5.min.js"></script>
@@ -38,6 +40,7 @@
         <script src="/js/traffic.js"></script>
         <script src="/js/notices.js"></script>
         <script src="/js/cameras.js"></script>
+        <script src="/js/dweetimations.js"></script>
         <script src="/js/base.js"></script>
 
         {% block js %}{% endblock %}
