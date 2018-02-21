@@ -1,11 +1,7 @@
 (function($){
     var _notices;
 
-    var _icons = {
-        'fedex': 'assets/img/mail-icons/fedex.svg',
-        'ups': 'assets/img/mail-icons/ups.svg',
-        'usps': 'assets/img/mail-icons/usps.svg'
-    };
+    var _icons = {};
 
     var _interface = {
         add: function(details){
