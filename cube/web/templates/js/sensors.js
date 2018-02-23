@@ -216,12 +216,9 @@
                         var notice = {
                             'type': 'trash-day',
                             'symbol': 'delete',
+                            'priority': 'urgent',
                             'message': 'Tomorrow is trash day'
                         };
-
-                        if(moment().format('HH:mm') >= '19:00'){
-                            notice['priority'] = 'urgent';
-                        }
 
                         $.notices.add(notice);
                     }
