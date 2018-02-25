@@ -258,7 +258,7 @@
 
                         $.notices.add({
                             'type': 'traffic-incident-' + i,
-                            'symbol': 'warning',
+                            'symbol': 'info_outline',
                             'message': message,
                             'description': incident.description
                         });
@@ -279,6 +279,39 @@
                     });
                 
                     $(this).html(state);
+                });
+            }
+            else if(type == 'pws_alerts'){
+                bind(this, function(state, attributes){
+                    var ignore = [];
+                    var urgent = ['HUR', 'TOR', 'WRN', 'FLO', 'SPE', 'VOL', 'HWW'];
+
+                    $.notices.remove('weather-alert');
+
+                    for(key in attributes){
+                        if(key.startsWith('Message')){
+                            var alertType = key.substring(key.indexOf('_') + 1);
+
+                            if(!(alertType in ignore)){
+                                var message = attributes['Description_' + alertType];
+                                var description = attributes['Message_' + alertType].replace(/\.\.\./g, ' ').trim().split('\n')[0];
+                                var start = attributes['Date_' + alertType];
+                                var end = attributes['Expires_' + alertType];
+
+                                var notice = {
+                                    'type': 'weather-alert-' + alertType,
+                                    'symbol': 'warning',
+                                    'message': message
+                                };
+
+                                if(urgent.includes(alertType)){
+                                    notice['priority'] = 'urgent';
+                                }
+
+                                $.notices.add(notice);
+                            }
+                        }
+                    }
                 });
             }
             else{
