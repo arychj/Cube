@@ -283,6 +283,7 @@
             }
             else if(type == 'pws_alerts'){
                 bind(this, function(state, attributes){
+                    // https://www.wunderground.com/weather/api/d/docs?d=data/alerts
                     var ignore = ['SVR', 'SPE'];
                     var urgent = ['HUR', 'TOR', 'WRN', 'FLO', 'VOL', 'HWW'];
 
