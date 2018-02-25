@@ -283,8 +283,8 @@
             }
             else if(type == 'pws_alerts'){
                 bind(this, function(state, attributes){
-                    var ignore = [];
-                    var urgent = ['HUR', 'TOR', 'WRN', 'FLO', 'SPE', 'VOL', 'HWW'];
+                    var ignore = ['SVR', 'SPE'];
+                    var urgent = ['HUR', 'TOR', 'WRN', 'FLO', 'VOL', 'HWW'];
 
                     $.notices.remove('weather-alert');
 
