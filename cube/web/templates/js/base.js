@@ -37,7 +37,8 @@ $(document).ready(function(){
                     'sensor.fedex',
                     'sensor.usps_mail',
                     'sensor.usps_packages',
-                    'sensor.trash_day'
+                    'sensor.trash_day',
+                    'sensor.pws_alerts'
                 ],
                 'logEventsToConsole': false,
                 'onDiscoveryComplete': function(){
