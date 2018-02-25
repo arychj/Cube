@@ -292,8 +292,7 @@
                     for(key in attributes){
                         if(key.startsWith('Message')){
                             var alertType = key.substring(key.indexOf('_') + 1);
-
-                            if(!(alertType in ignore)){
+                            if(!ignore.includes(alertType)){
                                 var message = attributes['Description_' + alertType];
                                 var description = attributes['Message_' + alertType].replace(/\.\.\./g, ' ').trim().split('\n')[0];
                                 var start = attributes['Date_' + alertType];
