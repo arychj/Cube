@@ -289,26 +289,40 @@
 
                     $.notices.remove('weather-alert');
 
-                    for(key in attributes){
-                        if(key.startsWith('Message')){
-                            var alertType = key.substring(key.indexOf('_') + 1);
-                            if(!ignore.includes(alertType)){
-                                var message = attributes['Description_' + alertType];
-                                var description = attributes['Message_' + alertType].replace(/\.\.\./g, ' ').trim().split('\n')[0];
-                                var start = attributes['Date_' + alertType];
-                                var end = attributes['Expires_' + alertType];
+                    // wunderground component doesn't provide type for single alerts unless hack is applied
+                    // so just display it and don't bother processing
+                    if('Description' in attributes){ 
+                        $.notices.add({
+                            'type': 'weather-alert-unknown',
+                            'symbol': 'warning',
+                            'message': attributes['Description']
+                        });
+                    }
+                    else{
+                        for(key in attributes){
+                            if(key.startsWith('Message')){
+                                var keyNodes = key.split('_');
+                                if(keyNodes.length == 2){
+                                    var alertType = keyNodes[1];
+                                    if(!ignore.includes(alertType)){
+                                        var message = attributes['Description_' + alertType];
+                                        var description = attributes['Message_' + alertType].replace(/\.\.\./g, ' ').trim().split('\n')[0];
+                                        var start = attributes['Date_' + alertType];
+                                        var end = attributes['Expires_' + alertType];
 
-                                var notice = {
-                                    'type': 'weather-alert-' + alertType,
-                                    'symbol': 'warning',
-                                    'message': message
-                                };
+                                        var notice = {
+                                            'type': 'weather-alert-' + alertType,
+                                            'symbol': 'warning',
+                                            'message': message
+                                        };
 
-                                if(urgent.includes(alertType)){
-                                    notice['priority'] = 'urgent';
+                                        if(urgent.includes(alertType)){
+                                            notice['priority'] = 'urgent';
+                                        }
+
+                                        $.notices.add(notice);
+                                    }
                                 }
-
-                                $.notices.add(notice);
                             }
                         }
                     }
