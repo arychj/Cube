@@ -19,24 +19,22 @@
 
     function setupCameras(){
         $(_cameras).each(function(){
+            var camera = this;
             var name = getName(this);
 
             $(this).html($('<div/>').addClass('title'));
             $(this).append('<img/>');
 
-            if(name == 'xxx'){
-                bind(this, function(state){
+            bind(this, function(title, url){
+                $(this).find('.title').html(title);
+                $(this).attr({
+                    'camera-snap-source': url
                 });
-            }
-            else{
-                bind(this, function(title, url){
-                    $(this).find('.title').html(title);
-                    $(this).find('img').attr({'src': url});
-                });
-            }
 
-            if($(this)[0].hasAttribute('camera-refresh')){
-                var camera = this;
+                refresh(camera, true);
+            });
+
+            if($(this).is('[camera-refresh]')){
                 setInterval(function(){ refresh(camera); }, parseInt($(this).attr('camera-refresh')) * 1000);
             }
         });
@@ -55,21 +53,20 @@
         });
     }
 
-    function refresh(camera){
-        if($(camera).is(':visible')){
+    function refresh(camera, force){
+        if($(camera).is(':visible') || (force == true)){
             var img = $(camera).find('img');
-            var src = $(img).attr('src');
 
-            if(src.indexOf('&ts') > 0){
-                src = src.substring(0, src.indexOf('&ts'));
-            }
+            var img = $('<img/>').attr({
+                'src': $(camera).attr('camera-snap-source') + '&ts=' + Date.now()
+            }).hide();
+            
+            $(camera).append(img);
 
-            src = src + '&ts=' + Date.now();
-
-//            $(img).attr('src', src);
-            $(camera).append($('<img/>').attr({'src': src}).hide());
-            $(camera).find('img:last').fadeIn('fast', function(){
-                $(camera).find('img:first').remove();
+            $(img).on('load', function(){
+                $(img).fadeIn('fast', function(){
+                    $(camera).find('img:first').remove();
+                });
             });
         }
     }
