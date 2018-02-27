@@ -44,9 +44,9 @@ $(document).ready(function(){
                 'logEventsToConsole': false,
                 'onDiscoveryComplete': function(){
                     $('.sensor').sensor({
-                        'customBindings': {
-                            'motion_camera_front_door': function(state){
-                                if(state =='movement'){
+                        'bindings': {
+                            '^motion_camera_front_door$': function(state){
+                                if(state == 'movement'){
                                     $('[cube-face-show="left"]').click();
                                 }
                             }
