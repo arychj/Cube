@@ -3,34 +3,54 @@
 
     var _icons = {};
 
+	var _precedences = {
+		'top': 0
+	};
+
+	var _priorities = {
+		'high': 1,
+		'urgent': 0
+	};
+
     var _interface = {
         add: function(details){
-            _interface.remove(details.type);
+            var type = details.type;
+            var priority = ('priority' in details ? details.priority : null);
+            var symbol = ('symbol' in details ? details.symbol : details.type);
+            var message =  details.message;
+            var description = ('description' in details ? details.description : null);
+			var precedence = ('precedence' in details ? details.precedence : null);
+            var persist = ('persist' in details ? details.persist : false);
+			var ttl = ('ttl' in details ? details.ttl : null);
 
-            var notice = createNotice(
-                details.type, 
-                ('priority' in details ? details.priority : null),
-                ('symbol' in details ? details.symbol : details.type),
-                details.message,
-                ('description' in details ? details.description : null),
-                ('persist' in details ? details.persist : false)
-            );
+			var hash = ('' + type + precedence + priority + symbol + message + description + precedence + persist + ttl).hash();
 
-            if(('precedence' in details) && (details.precedence == 'top')){
-                $(_notices).prepend(notice);
-            }
-            else{
-                $(_notices).append(notice);
-            }
+			var current = getNotice(type);
+			if((current.length == 0) || (current.attr('notice-hash') != hash)){
+				_interface.remove(type);
 
-            if('ttl' in details){
-                setTimeout(function(){ _interface.remove(details.type); }, 1000 * details.ttl);
-            }
+				var notice = createNotice(type, precedence, priority, symbol, message, description, persist, hash);
 
-            $(notice).fadeIn();
+				if(precedence == 'top'){
+					$(_notices).prepend(notice);
+				}
+				else{
+					$(_notices).append(notice);
+				}
+
+				if(ttl != null){
+					setTimeout(function(){ _interface.remove(type); }, 1000 * ttl);
+				}
+
+				$(notice).fadeIn();
+
+				$(_notices).sort(function(a, b){
+					return (getSortKey(a) > getSortKey(b) ? 1 : -1);
+				});
+			}
         },
         remove: function(type){
-            $(_notices).find('li[notice-type^=' + type + ']').fadeOut(function(){
+            getNotice(type).fadeOut(function(){
                 $(this).remove();
             });
         }
@@ -45,11 +65,23 @@
         return this;
     }
 
+	function getNotice(type){
+		return $(_notices).find('li[notice-type^=' + type + ']');
+	}
+
+	function getSortKey(notice){
+		var precedence = ($(notice).attr('notice-precedence') in _precedences ? _precedences[$(notice).attr('notice-precedence')] : 9);
+		var priority = ($(notice).attr('notice-priority') in _priorities ? _priorities[$(notice).attr('notice-priority')] : 9);
+		var type = $(notice).attr('notice-type');
+
+		return '' + precedence + priority + type;
+	}
+
     function acceptParameters(params){
         _icons = $.extend(true, _icons, params['icons']);
     }
 
-    function createNotice(type, priority, symbol, message, description, persist){
+    function createNotice(type, precedence, priority, symbol, message, description, persist, hash){
         var icon = '*';
         if(symbol in _icons){
             icon = $('<img/>').attr({
@@ -79,7 +111,11 @@
         }
 
         var notice = $('<li/>')
-                .attr('notice-type', type)
+                .attr({
+					'notice-type': type,
+					'notice-precedence': precedence,
+					'notice-priority': priority
+				})
                 .append(
                     $('<div/>')
                         .addClass('icon')
@@ -97,6 +133,8 @@
         if(persist){
             $(notice).attr('notice-persist', '');
         }
+
+		$(notice).attr('notice-hash', hash);
 
         return notice;
     }
