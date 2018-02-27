@@ -1,5 +1,5 @@
 (function($){
-    var _sensors, _skycons;
+    var _sensors, _skycons, _customBindings;
 
     function init(params){
         console.log("Initializing sensors...");
@@ -17,11 +17,13 @@
     }
 
     function acceptParameters(params){
+        _customBindings = params['customBindings'];
     }
 
     function setupSensors(){
         $(_sensors).each(function(){
             var type = getType(this);
+
             if(type == 'dark_sky_icon'){
                 bind(this, function(state){
                     _skycons.remove($(this).attr('id'));
@@ -328,6 +330,16 @@
                     }
                 });
             }
+//            else if(type == 'motion_camera_front_door'){
+//               bind(this, function(state){
+//                    if(state == 'movement'){
+//                        $('[cube-face-show="left"]').click();
+//                    }
+//                });
+//            }
+            else if(type in _customBindings){
+                bind(this, _customBindings[type]);
+            }
             else{
                 bind(this, function(state){
                     $(this).html(state);
@@ -347,10 +359,13 @@
     }
 
     $.fn.sensor = function(params){
-        arguments[0] = $.extend(true,{
-        }, arguments[0]);
+        var args = (arguments.length == 0 ? [{}] : arguments);
 
-        return init.apply(this, arguments);
+        args[0] = $.extend(true, {
+            'customBindings': []
+        }, args[0]);
+
+        return init.apply(this, args);
     }
 
 })(jQuery);
