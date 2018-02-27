@@ -77,7 +77,12 @@ This component responds to `update-state` events produced by `hass.js` and updat
 
 ```js
 // should be initialized after entity discovery is complete
-$('.sensor').sensor();
+$('.sensor').sensor({
+  'bindings': []                            // OPTIONAL
+                                            // Dictionary of custom bindings to apply to sensors
+                                            // key: regex pattern matching sensor type
+                                            // value: function(state, attributes, type){ }
+});
 ```
 
 ### controls.js
