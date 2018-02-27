@@ -38,11 +38,21 @@ $(document).ready(function(){
                     'sensor.usps_mail',
                     'sensor.usps_packages',
                     'sensor.trash_day',
-                    'sensor.pws_alerts'
+                    'sensor.pws_alerts',
+                    'sensor.motion_camera_front_door'
                 ],
                 'logEventsToConsole': false,
                 'onDiscoveryComplete': function(){
-                    $('.sensor').sensor();
+                    $('.sensor').sensor({
+                        'bindings': {
+                            '^motion_camera_front_door$': function(state){
+                                if(state == 'movement'){
+                                    $('[cube-face-show="left"]').click();
+                                }
+                            }
+                        }
+                    });
+
                     $('.control').control();
                     $('.camera').camera({'baseurl': 'http://' + _global_credentials['hass-host']});
                 }
