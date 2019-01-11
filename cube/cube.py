@@ -27,6 +27,15 @@ class CubeServer():
                 else:
                     self._parameters = {}
 
+                self._parameters['faces'] = {
+					'front': 'front',
+					'back': 'back',
+					'top': 'top',
+					'bottom': 'bottom',
+					'left': 'left',
+					'right': 'right'
+                }
+
             return self._parameters
 
         def get_assets_directory(self):
