@@ -3,6 +3,8 @@ A touch enabled Command and Control Center for Home Assistant
 
 Please note: this project is currently *NOT* intended to be used on a publicly available host as the `js/credentials.js` file is downloaded to the client and used to authenticate to the HASS websocket.
 
+<div style="text-align: center;"><img src ="https://raw.githubusercontent.com/ste-haus/cube/master/demo/cube.gif" /></div>
+
 ## Usage
 ### Running the server
 To run the server at the command line: `./cube.py`
