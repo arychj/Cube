@@ -22,5 +22,18 @@
     },
     "printer":{
         "webcam": "http://octoprint/webcam/?action=stream"
+    },
+    "cameras": {
+        "security": [
+            "camera.security_0",
+            "camera.security_1",
+            "camera.security_2"
+        ],
+        "traffic": [
+            "camera.traffic_0",
+            "camera.traffic_1",
+            "camera.traffic_2",
+            "camera.traffic_3"
+        ]
     }
 }
