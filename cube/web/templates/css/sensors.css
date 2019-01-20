@@ -8,15 +8,14 @@
 
 #date{
     color: #666666;
-    font-size: 27px;
+    font-size: 1.25em;
     font-weight: 300;
     height: 35px;
 }
 
 #time{
-    font-size: 60px;
+    font-size: 3em;
     font-weight: 100;
-    height: 80px;
 }
 
 #weather{
@@ -38,33 +37,33 @@
 
 #weather .icons img{
     vertical-align: middle;
-    height: 35px;
+    height: 6vh;
     margin-left: 5px;
 }
 
 #weather .icons .sensor{
     color: #666666;
-    font-size: 18px;
+    font-size: 0.75em;
 }
 
 #weather .sensor[entity-id$=icon]{
     text-align: right;
 }
 
-#weather .sensor[entity-id$=temperature]{
-    font-size: 60px;
+#weather .sensor[entity-id*=temperature]{
+    font-size: 3em;
     font-weight: 100;
 }
 
-#weather .sensor[entity-id$=high_temperature],
-#weather .sensor[entity-id$=low_temperature]{
+#weather .sensor[entity-id*=high_temperature],
+#weather .sensor[entity-id*=low_temperature]{
     text-align: center;
     color: #333333;
-    font-size: 30px;
+    font-size: 1.5em;
     font-weight: normal;
 }
 
-#weather .sensor[entity-id$=temperature]::after{
+#weather .sensor[entity-id*=temperature]::after{
     content: '\00b0';
 }
 
@@ -73,7 +72,7 @@
 }
 
 #weather .summary{
-    font-size: 16px;
+    font-size: 0.75em;
     color: #666666;
     text-align: justify;
     text-align-last: right;
@@ -83,31 +82,74 @@
     text-align: center;
 }
 
-#traffic .map{
+#traffic .camera .last-updated{
+    color: #666666;
+    text-shadow: -2px -2px 3px #000000;
+}
+
+#traffic .map, #traffic .camera .frame{
     margin: auto;
-    height: 350px;
-    width: 350px;
-    border: 1px #333333 solid;
+    width: 45vh;
     filter: brightness(80%);
 }
 
-#traffic .map .gm-style>div:not([tabindex]){
-    display: none;
+#traffic .camera .title{
+    text-align: right;
+}
+
+#printer .details{
+	font-size: 0.75em;
+	color: #666666;
+}
+
+#printer .details .name{
+	text-decoration: underline;
 }
 
 .camera{
     position: relative;
+    min-height: 45vh;
     text-align: center;
+}
+
+.camera .last-updated{
+    position: absolute;
+    top: 13%; right: 5%;
+    width: 50%;
+    color: #000000;
+    text-shadow: 0px 1px 5px rgba(255, 255, 255, .5);
+    text-align: right;
+    font-size: 0.5em;
+    z-index: 9999;
+}
+
+.camera .last-updated i{
+    position: absolute;
+    top: 50%;
+    transform: translate(-105%, -50%);
+    font-size: 1.5em;
+}
+
+.camera .frame{
+    width: 100%; 
+    position: relative;
 }
 
 .camera img{
     width: 100%;
+    position: absolute;
+    left: 0;
 }
 
 .camera[camera-refresh] img{
-    position: absolute;
-    top: 40px;
-    left: 0;
+}
+
+.stream img{
+	width: 100%;
+}
+
+#notices{
+    min-height: 25vh;
 }
 
 #notices [notice-type^='traffic-incident'] .delay{
@@ -129,4 +171,123 @@
 
 #notices [notice-type^='traffic-incident'] .delay::after{
     content: ')';
+}
+
+#agenda{
+    text-align: center;
+    position: relative;
+}
+
+#agenda .name{
+    height: 3.5vh;
+    margin: 0 5% 0 5%;
+    padding: 0 2% 0 2%;
+    display: inline-block;
+    color: #888888;
+    border-bottom: 1px solid #333333;
+}
+
+#agenda .name:first-of-type{
+    text-align: right;
+}
+
+#agenda .name:last-of-type{
+    text-align: left;
+}
+
+#agenda .timeline{
+    display: none;
+    position: absolute;
+    top: 4vh; left: 0;
+    width: 100%;
+
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        transparent calc(50% - 0.8px),
+        #444444 calc(50% - 0.1px),
+        #444444 calc(50% + 0.1px),
+        transparent calc(50% + 0.8px),
+        transparent 100%
+    );
+}
+
+#agenda .slot{
+    position: relative;
+    clear: both;
+
+    color: #666666;
+    font-size: 1em;
+}
+
+#agenda .slot:first-child .time{
+    margin-top: 0;
+}
+
+#agenda .time{
+    position: absolute;
+    left: 45%;
+    margin-top: 0;
+    padding: 15px 2px 15px 0;
+    width: 10%;
+    text-align: center;
+
+    color: #777777;
+    font-size: 0.8em;
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(transparent, black, transparent);
+}
+
+#agenda .event{
+    width: 42%;
+    margin-top: 1.3vh;
+    clear: both;
+}
+
+#agenda .event.template{
+    display: none;
+}
+
+#agenda .event .title{
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #666666;
+    font-size: 0.8em;
+    text-transform: none;
+    border-bottom: 0;
+}
+
+#agenda .event .description, #agenda .event .location{
+    color: #444444;
+    font-size: 0.6em;
+    text-transform: none;
+}
+
+#agenda .event.left{
+    float: left;
+    text-align: right !important;
+}
+
+#agenda .event.left .title{
+    text-align: right !important;
+}
+
+#agenda .event.right{
+    float: right;
+    text-align: left !important;
+}
+
+#agenda .event.right .title{
+    text-align: left !important;
+}
+
+#agenda .footer{
+    clear: both;
+    height: 2vh;
+}
+
+#floorplan .movement{
+    stroke: #f00;
+    stroke-width: 5px;
 }

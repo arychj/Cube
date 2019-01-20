@@ -15,7 +15,7 @@
 }
 
 #notices li img {
-    height: 15px;
+    height: 2vh;
     filter: grayscale(100%);
     vertical-align: middle;
 }
@@ -25,7 +25,7 @@
 }
 
 #notices li img[src*=ups]{
-   height: 20px;
+   height: 2.5vh;
 }
 
 #notices li .icon{
@@ -36,11 +36,15 @@
     vertical-align: top;
 }
 
+#notices li .icon i{
+    font-size: 1em;
+}
+
 #notices li .details{
     display: inline-block;
     width: 83%;
     color: #666666;
-    font-size: 16px;
+    font-size: 0.7em;
 }
 
 #notices li .message{

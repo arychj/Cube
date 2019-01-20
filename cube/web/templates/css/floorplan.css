@@ -1,8 +1,10 @@
 #floorplan{
     height: 100%;
     padding: 0;
+    text-align: center;
 }
 
 #floorplan svg{
     width: 95%;
+    height: 95%;
 }

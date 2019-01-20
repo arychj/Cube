@@ -1,12 +1,31 @@
 html{
-    cursor: none;
     overflow: hidden;
 /*touch-action: none;*/
 }
 
+body.touch{
+    cursor: none;
+}
+
+@media (min-width: 800px){
+    html{ font-size: 6pt; }
+}
+
+@media (min-width: 1280px){
+    html{ font-size: 8pt; }
+}
+
+@media (min-width: 1440px){
+    html{ font-size: 10pt; }
+}
+
+@media (min-width: 2000px){
+    html{ font-size: 16pt; }
+}
+
 body{
     font-family: Roboto, sans-serif !important;
-    font-size: 20px;
+    font-size: 1.875em;
 
     user-select: none;
 }
@@ -24,6 +43,11 @@ body{
 	height: 100%;
 	background-color: #111 !important;
     overflow: hidden;
+}
+
+.ui-body-inherit{
+    border: 0 !important;
+    background-color: inherit !important;
 }
 
 .pt-perspective {
@@ -69,7 +93,7 @@ body{
 }
 
 .title{
-    font-size: 20px;
+    font-size: 1em;
     color: #666666;
     text-align: left;
     border-bottom: 1px #666666 solid;
@@ -97,7 +121,7 @@ body{
 }
 
 #connection-status .status{
-    font-size: 40px;
+    font-size: 2em;
     color: #fff;
     margin: auto;
     position: absolute;
@@ -130,7 +154,7 @@ body{
 [hass-log]{
     padding: 10px;
     height: 100%;
-    font-size: 18px;
+    font-size: 1em;
     font-family: "Courier New", monospace;
     overflow: hidden;
 }
@@ -146,4 +170,12 @@ body{
     to {
         width: 1em; 
     }
+}
+
+#traffic .camera .last-updated{
+    margin-right: 3vw;
+}
+
+.security .camera .last-updated{
+    display: none;
 }
