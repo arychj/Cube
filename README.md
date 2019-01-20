@@ -165,7 +165,10 @@ $.notices.add({
 
 By default, the `notices.js` component will use the [material-icons](http://materializecss.com/icons.html) pack.
 
-### traffic.js
+### ~~traffic.js~~
+**deprecated** - use a [webshot camera](https://github.com/ste-haus/webshot) instead.
+The prevents exposure of the google api keys to the cube, as well as reducing the number of calls to the maps service if multiple cubes are in use.
+
 Creates a Google Map with traffic layer showing how heavy the traffic is in your local area. Please note, this component is not integrated with Home Assistant and does not respond to events. It is a pure client side implementation talking directly to Google.
 
 ```js
