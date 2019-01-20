@@ -1,0 +1,20 @@
+<div class="title">Security</div>
+<div class="row">
+    {% for camera in cameras.security %}
+        {% set size = 's5' if loop.index <= 2 else 's4' %}
+        {% if loop.index == 1 %}
+            <div class="col s1">&nbsp;</div>
+        {% elif loop.index == 3 %}
+            </div>
+            <div class="row">
+            {% if cameras.security|length == 3 %}
+                <div class="col s4">&nbsp;</div>
+            {% elif cameras.security|length == 4 %}
+                <div class="col s2">&nbsp;</div>
+            {% endif %}
+        {% endif %}
+        <div class="col {{ size }}">
+            <div class="camera" camera-refresh="1" entity-id="{{ camera }}">&nbsp;</div>
+        </div>
+    {% endfor %}
+</div>

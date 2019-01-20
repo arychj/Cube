@@ -6,12 +6,11 @@
 
 {% block body %}
 <div id="cube" class="pt-perspective">
-    {% include 'cube/front.html' %}
-    {% include 'cube/back.html' %}
-    {% include 'cube/top.html' %}
-    {% include 'cube/bottom.html' %}
-    {% include 'cube/left.html' %}
-    {% include 'cube/right.html' %}
+    {% for face, template in faces.items() %}
+        <div class="cube-face {{ template }}" id="cube-face-{{ face }}" cube-face="{{ face }}">
+            {% include 'cube/' + template + '.html' %}
+        </div>
+    {% endfor %}
 </div>
 {% include 'cube-map.html' %}
 {% endblock %}

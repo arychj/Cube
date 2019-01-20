@@ -1,0 +1,19 @@
+<div class="title">Traffic</div>
+<div class="row">
+    <div class="col s2">&nbsp;</div>
+    {% for camera in cameras.traffic %}
+        <div class="col s4">
+            <div class="camera" entity-id="{{ camera }}"></div>
+        </div>
+        {% if loop.index % 2 == 0 %}
+            </div>
+            <div class="row">
+                <div class="col s2">&nbsp;</div>
+        {% endif %}
+    {% endfor %}
+</div>
+<div class="row">
+    <div class="col s12">
+        <div class="sensor" entity-id="sensor.traffic_incidents"></div>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="col s4">
+        <div class="row">
+            <div class="col s12">
+                <div id="date" class="sensor" entity-id="sensor.date">&nbsp;</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div id="time" class="sensor" entity-id="sensor.time">&nbsp;</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="title">Notices</div>
+                <ul id="notices"></ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <div class="title">Today</div>
+                <div id="agenda" class="sensor" entity-id="sensor.todays_agenda">
+                    <div class="event template">
+                        <div class="title"></div>
+                        <div class="location"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="floorplan" class="col s4">
+{% include 'floorplan/loft.svg' %}
+{% include 'floorplan/upstairs.svg' %}
+{% include 'floorplan/downstairs.svg' %}
+    </div>
+    <div class="col s4">
+        <div class="row" id="weather">
+            <div class="col s12">
+                <div class="row">
+                    <div class="col s12 icons">
+                        <img src="/assets/img/weather-icons/wi-raindrop.svg"/>
+                        <span class="sensor" entity-id="sensor.pws_precip_1d">&nbsp;</span>
+                        <img src="/assets/img/weather-icons/wi-strong-wind.svg"/>
+                        <span class="sensor" entity-id="sensor.dark_sky_wind_speed">&nbsp;</span>
+                        <span class="sensor" entity-id="sensor.dark_sky_wind_bearing">&nbsp;</span>
+                        <img src="/assets/img/weather-icons/wi-sunrise.svg"/>
+                        <span class="sensor" entity-id="sensor.sunrise">00:00</span>
+                        <img src="/assets/img/weather-icons/wi-sunset.svg"/>
+                        <span class="sensor" entity-id="sensor.sunset">00:00</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s2">&nbsp;</div>
+                    <div class="col s4 icon">
+                        <canvas id="icon_current" width="95" height="95" class="sensor" entity-id="sensor.dark_sky_icon"></canvas>
+                    </div>
+                    <div class="col s3">
+                        <div class="sensor temperature" entity-id="sensor.dark_sky_temperature">0</div>
+                    </div>
+                    <div class="col s3">
+                        <div><span class="sensor temperature" entity-id="sensor.dark_sky_daytime_high_temperature_0">0</span><i class="material-icons">arrow_upward</i></div>
+                        <div><span class="sensor temperature" entity-id="sensor.dark_sky_overnight_low_temperature_0">0</span><i class="material-icons">arrow_downward</i></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 summary">
+                        <span class="sensor" entity-id="sensor.dark_sky_summary">&nbsp;</span>
+                        <span class="sensor" entity-id="sensor.dark_sky_hourly_summary">&nbsp;</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="traffic" class="col12">
+                <div class="camera" entity-id="camera.traffic"></div>
+            </div>
+        </div>
+        <div class="row">
+        </div>
+    </div>
+</div>

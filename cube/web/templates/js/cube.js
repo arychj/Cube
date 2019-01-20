@@ -20,12 +20,12 @@
             _cube = generateCubeRotationGraph(faces);
         }
         else{
-            throw 'Invalid number of faces.';
+            throw 'Invalid number of faces.' + faces.length;
         }
 
         addEventListeners();
 
-	    show();
+	    setTimeout(function(){ show(); }, 1000);
 
         return this;
     }
@@ -38,7 +38,7 @@
         if(typeof face === 'undefined'){
             face = _defaultFace;
         }
-
+             
         $('[cube-face]').fadeOut().removeAttr('cube-face-current');
 	    $(face).attr({'cube-face-current': ''}).fadeIn();
 
@@ -46,6 +46,8 @@
         $('.cube-map-face[cube-face-show=' + $(face).attr('cube-face') + ']').addClass('active');
 
         setResetTimer();
+
+		$(document).trigger('cube-rotate'); 
     }
 
     function setResetTimer(){
@@ -108,10 +110,10 @@
     }
 
     function addEventListeners(){
-	    $('body').on('swipeup', {'direction': 'up'}, rotate);
-    	$('body').on('swipedown', {'direction': 'down'}, rotate);
-    	$('body').on('swipeleft', {'direction': 'left'}, rotate);
-	    $('body').on('swiperight', {'direction': 'right'}, rotate);
+	    $('body').not('[no-rotate]').on('swipeup', {'direction': 'up'}, rotate);
+    	$('body').not('[no-rotate]').on('swipedown', {'direction': 'down'}, rotate);
+    	$('body').not('[no-rotate]').on('swipeleft', {'direction': 'left'}, rotate);
+	    $('body').not('[no-rotate]').on('swiperight', {'direction': 'right'}, rotate);
 
         $('[cube-face-show]').on('click', function(e){
             show('[cube-face=' + $(this).attr('cube-face-show') + ']');
@@ -136,43 +138,43 @@
                 name: 'right',
                 element: $(faces).locate('[cube-face="right"]')
             },
-            top: {
-                name: 'top',
-                element: $(faces).locate('[cube-face="top"]')
+            up: {
+                name: 'up',
+                element: $(faces).locate('[cube-face="up"]')
             },
-            bottom: {
-                name: 'bottom',
-                element: $(faces).locate('[cube-face="bottom"]')
+            down: {
+                name: 'down',
+                element: $(faces).locate('[cube-face="down"]')
             }
         };
 
-        cube.front.up = cube.bottom;
-        cube.front.down = cube.top;
+        cube.front.up = cube.down;
+        cube.front.down = cube.up;
         cube.front.left = cube.right;
         cube.front.right = cube.left;
 
-        cube.back.up = cube.top;
-        cube.back.down = cube.bottom;
+        cube.back.up = cube.up;
+        cube.back.down = cube.down;
         cube.back.left = cube.left;
         cube.back.right = cube.right;
 
-        cube.top.up = cube.front;
-        cube.top.down = cube.back;
-        cube.top.left = cube.right;
-        cube.top.right = cube.left;
+        cube.up.up = cube.front;
+        cube.up.down = cube.back;
+        cube.up.left = cube.right;
+        cube.up.right = cube.left;
 
-        cube.bottom.up = cube.back;
-        cube.bottom.down = cube.front;
-        cube.bottom.left = cube.right;
-        cube.bottom.right = cube.left;
+        cube.down.up = cube.back;
+        cube.down.down = cube.front;
+        cube.down.left = cube.right;
+        cube.down.right = cube.left;
 
-        cube.left.up = cube.bottom;
-        cube.left.down = cube.top;
+        cube.left.up = cube.down;
+        cube.left.down = cube.up;
         cube.left.left = cube.front;
         cube.left.right = cube.back;
 
-        cube.right.up = cube.bottom;
-        cube.right.down = cube.top;
+        cube.right.up = cube.down;
+        cube.right.down = cube.up;
         cube.right.left = cube.back;
         cube.right.right = cube.front;
 
