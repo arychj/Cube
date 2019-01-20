@@ -1,0 +1,15 @@
+version: '2'
+services:
+    cube:
+        build:
+            context: .
+            dockerfile: ./cube.docker
+        image: arychj/cube
+        container_name: cube
+        ports:
+            - "4096:4096"
+        volumes:
+            - ../cube:/data/cube
+        environment:
+            TZ: "America/Chicago"
+        restart: always
