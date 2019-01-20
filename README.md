@@ -171,7 +171,7 @@ By default, the `notices.js` component will use the [material-icons](http://mate
 ### agenda.js
 The `agenda.js` component displays today's events from an iCal feed for up to two users.
 
-```json
+```js
 // parameters.js
 ...
   "agenda": {
@@ -190,7 +190,7 @@ The `agenda.js` component displays today's events from an iCal feed for up to tw
 ### stream.js
 The `stream.js` component displays a webstream camera on the page when the face is visible
 
-```json
+```js
 // parameters.js
 ...
   "printer":{
