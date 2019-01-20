@@ -50,9 +50,11 @@
 			}
         },
         remove: function(type){
-            getNotice(type).fadeOut(function(){
-                $(this).remove();
-            });
+            getNotice(type)
+                .addClass('removed')
+                .fadeOut(function(){
+                    $(this).remove();
+                });
         }
     }
 
@@ -66,7 +68,7 @@
     }
 
 	function getNotice(type){
-		return $(_notices).find('li[notice-type^=' + type + ']');
+		return $(_notices).find('li[notice-type^=' + type + ']:not(.removed)');
 	}
 
 	function getSortKey(notice){
