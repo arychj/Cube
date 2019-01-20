@@ -2,11 +2,17 @@
     var _sensors, _skycons, _patterns;
 
     var _bindings = {
+        '^motion_.*': function(state){
+            $(this).removeClass('movement');
+            if(state == 'movement'){
+                $(this).addClass('movement');
+            }
+        },
         '^dark_sky_icon$': function(state){
             _skycons.remove($(this).attr('id'));
             _skycons.add($(this).attr('id'), state);
         },
-        'temperature$': function(state){
+        '.*temperature.*': function(state){
             $(this).html(Math.round(state));
         },
         '^date$': function(state){
@@ -29,8 +35,6 @@
             $(this).html(date);
         },
         '^dark_sky_summary$': function(state){
-            state = 'Light rain';
-
             var suffixes = {
                 'ing': {
                     'trim': ['e'],
@@ -88,17 +92,10 @@
             state = (isNaN(state) ? 0 : state) + '%';
             $(this).html(state);
         },
-        '^(ups|fedex)$': function(state, attributes, type){
-            var count = 0;
-
-            var statuses = ['delivered', 'out_for_delivery'] //label_created, in_transit
-            for(var i = 0; i < statuses.length; i++){
-                if(statuses[i] in attributes){
-                    count += parseInt(attributes[statuses[i]]);
-                }
-            }
-            
+        '^(ups|fedex)_packages$': function(state, attributes, type){
+            var count = parseInt(state);
             if(count > 0){
+                type = type.substring(0, type.indexOf('_'));
                 $.notices.add({
                     'type': type,
                     'message': 
@@ -146,6 +143,33 @@
                     'symbol': 'delete',
                     'priority': 'urgent',
                     'message': 'Tomorrow is trash day'
+                };
+
+                $.notices.add(notice);
+            }
+        },
+        '^space_launch_today$': function(state, attributes, type){
+            $.notices.remove('space-launch');
+
+            if(state.length > 0){
+                var notice = {
+                    'type': 'space-launch',
+                    'symbol': 'rocket',
+                    'message': '<em>' + state + '</em> launch today!'
+                };
+
+                $.notices.add(notice);
+            }
+        },
+        '^farmshare_day$': function(state, attributes, type){
+            $.notices.remove('farmshare-day');
+
+            if(state == 'yes'){
+                var notice = {
+                    'type': 'farmshare-day',
+                    'symbol': 'eggplant',
+                    'priority': 'urgent',
+                    'message': 'Vegetables incoming'
                 };
 
                 $.notices.add(notice);
