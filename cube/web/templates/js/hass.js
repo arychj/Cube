@@ -66,6 +66,8 @@
 
             _socket = new WebSocket('ws://' + _host + '/api/websocket');
 
+            _socket.onmessage = receiveMessage;
+
             _socket.addEventListener('open', function(event){
                 console.log('Established connection to HASS...');
                 $('#connection-status').dweetistop();
@@ -84,12 +86,14 @@
                 _isOpen = false;
             });
 
-            _socket.onmessage = receiveMessage;
+            _socket.addEventListener('error', function(event){
+                console.log(event);
+            });
         }
     }
 
     function authenticate(password, callback){
-        sendMessage({'type': 'auth', 'api_password': password}, callback, true, true);
+        sendMessage({'type': 'auth', 'access_token': password}, callback, true, true);
     }
 
     function subscribe(callback){
@@ -112,8 +116,18 @@
     function getStates(){
         sendMessage({'type': 'get_states'}, function(event){
             $(event.result).each(function(index){
-                if(this.entity_id in _watchedEntities){
-                    setState(this.entity_id, this.state, this.attributes);
+                var entity_id = 'unknown';
+                try{
+                    entity_id = this.entity_id;
+                    if(entity_id in _watchedEntities){
+                        setState(entity_id, this.state, this.attributes);
+                    }
+                }
+                catch(error){
+                    console.log({
+                        'entity_id': entity_id,
+                        'error': error
+                    });
                 }
             });
         });
@@ -124,15 +138,15 @@
         switch(type){
             case 'sensor':
                 var sensor = getSensor(id);
-                $(sensor).trigger('update-state', {'state': state, 'attributes': attributes});
+                $(sensor).trigger('update-state', {'state': state, 'attributes': attributes, 'entityId': id});
                 break;
             case 'camera':
                 var camera = getCamera(id);
-                $(camera).trigger('update-state', {'state': state, 'attributes': attributes});
+                $(camera).trigger('update-state', {'state': state, 'attributes': attributes, 'entity-id': id});
                 break;
             default:
                 var control = getControl(id);
-                $(control).trigger('update-state', {'state': state, 'attributes': attributes});
+                $(control).trigger('update-state', {'state': state, 'attributes': attributes, 'entity-id': id});
                 break;
         }
     }
@@ -155,7 +169,10 @@
             console.log(message);
         }
 
-        if(('id' in message) && (message.id in _sequenceCallbacks)){
+        if(('type' in message) && (message.type == 'auth_required')){
+            authenticate(_password);
+        }
+        else if(('id' in message) && (message.id in _sequenceCallbacks)){
             _sequenceCallbacks[message.id].callback(message);
             if(_sequenceCallbacks[message.id].deleteAfterUse){
                 delete _sequenceCallbacks[message.id];
