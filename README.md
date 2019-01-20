@@ -177,11 +177,23 @@ The `agenda.js` component displays today's events from an iCal feed for up to tw
                                             // How often to refresh the feeds
       "calendars": {                        //
                                             // OPTIONAL
-         "left": "ical.feed",               // Feed to display on the left hand side
+         "left": "http://ical.feed",        // Feed to display on the left hand side
                                             // OPTIONAL
-         "right": "ical.feed"               // Feed to display on the right hand side
+         "right": "http://ical.feed"        // Feed to display on the right hand side
       }
   },
+...
+```
+
+### stream.js
+The `stream.js` component displays a webstream camera on the page when the face is visible
+
+```json
+// parameters.js
+...
+  "printer":{
+    "webcam": "http://webcam.stream"        // Feed URI
+  }
 ...
 ```
 
