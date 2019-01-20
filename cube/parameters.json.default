@@ -22,4 +22,5 @@
     },
     "printer":{
         "webcam": "http://octoprint/webcam/?action=stream"
+    }
 }
