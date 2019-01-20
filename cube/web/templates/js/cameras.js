@@ -1,5 +1,6 @@
 (function($){
     var _cameras, _baseurl;
+	var _staleness;
 
     function init(params){
         console.log("Initializing cameras...");
@@ -23,7 +24,9 @@
             var name = getName(this);
 
             $(this).html($('<div/>').addClass('title'));
-            $(this).append('<img/>');
+            $(this).append($('<div/>').addClass('last-updated'));
+            $(this).append($('<div/>').addClass('frame').append('<img/>'));
+//            $(this).append($('<img/>'));
 
             bind(this, function(title, url){
                 $(this).find('.title').html(title);
@@ -38,6 +41,8 @@
                 setInterval(function(){ refresh(camera); }, parseInt($(this).attr('camera-refresh')) * 1000);
             }
         });
+
+		_staleness = setInterval(updateStaleness, 1000);
     }
 
     function getName(camera){
@@ -54,22 +59,40 @@
     }
 
     function refresh(camera, force){
-        if($(camera).is(':visible') || (force == true)){
-            var img = $(camera).find('img');
+        if($(camera).is(':visible') || ($(camera).parents('.cube-face').css('display') == 'block') || (force == true)){
+            var frame = $(camera).find('.frame');
+			var ts = Date.now();
+			$(camera).find('.last-updated').attr('ts', ts);
 
             var img = $('<img/>').attr({
-                'src': $(camera).attr('camera-snap-source') + '&ts=' + Date.now()
+                'src': $(camera).attr('camera-snap-source') + '&ts=' + ts
             }).hide();
             
-            $(camera).append(img);
+            $(frame).append(img);
 
-            $(img).on('load', function(){
+            $(img).on('load error', function(){
                 $(img).fadeIn('fast', function(){
-                    $(camera).find('img:first').remove();
+                    $(frame).find('img:first').remove();
                 });
             });
         }
     }
+
+	function updateStaleness(){
+		$(_cameras).each(function(){
+			if($(this).is(':visible')){
+				var lastUpdated = $(this).find('.last-updated');
+				var ts = $(lastUpdated).attr('ts');
+
+				if(ts.length > 0){
+					$(lastUpdated).html(
+						'<i class="material-icons">restore</i>'
+						+ moment(ts, 'x').fromNow()
+					);
+				}
+			}
+		});
+	}
 
     $.fn.camera = function(params){
         var args = (arguments.length == 0 ? [{}] : arguments);
