@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
-import argparse, http.server, json, os, jinja2 
+import argparse, datetime, http.server, json, os, jinja2 
 from mimetypes import MimeTypes
 from socketserver import ThreadingMixIn
+
+from utils.agenda import Agenda
+
+__args = None
+__agenda = None
 
 class CubeServer():
     def start(self):
@@ -53,41 +58,64 @@ class CubeServer():
 
             mime = MimeTypes()
             
-            if self.path.startswith("/assets"):
-                assets = self.get_assets_directory()
-                
-                path = self.path.replace("..", "").replace("/assets", "", 1).strip("/")
-                path = os.path.join(assets, path)
-                path = os.path.normpath(path)
+            try:
+                if self.path.startswith("/assets"):
+                    assets = self.get_assets_directory()
+                    
+                    path = self.path.replace("..", "").replace("/assets", "", 1).strip("/")
+                    path = os.path.join(assets, path)
+                    path = os.path.normpath(path)
 
-                if path.startswith(assets):
-                    print(path)
-                    if os.path.exists(path):
-                        with open(path, "rb") as file:
-                            contents = file.read()
+                    if path.startswith(assets):
+                        print(path)
+                        if os.path.exists(path):
+                            with open(path, "rb") as file:
+                                contents = file.read()
 
-                        response = 200
-                        mimetype = mime.guess_type(path)[0]
+                            response = 200
+                            mimetype = mime.guess_type(path)[0]
+                        else:
+                            response = 404
+                            contents = "not found"
                     else:
                         response = 404
-                        contents = "not found"
-                else:
-                    response = 404
-                    contents = "shennaigans"
-            else:
-                if self.path.endswith("/"):
-                    path = self.path + "index.html"
-                else:
-                    path = self.path
+                        contents = "shennaigans"
+                elif self.path.startswith("/agenda"):
+                    parameters = self.get_parameters()
+                    if 'agenda' in parameters:
+                        calendars = parameters["agenda"]["calendars"]
+                        ttl = (int(parameters["agenda"]["ttl"]) if "ttl" in parameters["agenda"] else None)
 
-                contents = self.get_template(path)
-                if contents == None:
-                    response = 404
-                    contents = "template not found"
-                else:
+                        agenda = Agenda(calendars, ttl)
+    
+                        response = 200
+                        mime_type = "application/json"
+                        contents = json.dumps({
+                            "events": agenda.get_events(),
+                            "updated": str(agenda.get_last_updated())
+                        })
+                    else:
+                        response = 500
+                        contents = "Agenda not configured"
+                elif self.path.startswith("/datetime"):
                     response = 200
-                    mimetype = mime.guess_type(path)[0]
+                    contents = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                else:
+                    if self.path.endswith("/"):
+                        path = self.path + "index.html"
+                    else:
+                        path = self.path
 
+                    contents = self.get_template(path)
+                    if contents == None:
+                        response = 404
+                        contents = "template not found"
+                    else:
+                        response = 200
+                        mimetype = mime.guess_type(path)[0]
+            except Exception as e:
+                response = 500
+                contents = str(e)
 
             if isinstance(contents, str):
                 contents = contents.encode("utf-8")

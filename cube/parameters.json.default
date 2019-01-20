@@ -12,5 +12,14 @@
     "traffic": {
         "apikey": "",
         "location": "latitude,longitude"
-    }   
+    },
+    "agenda": {
+        "ttl": 10800,
+        "calendars": {
+            "left": "https://calendar.google.com/calendar/ical/account/private-key/basic.ics",
+            "right": "https://calendar.google.com/calendar/ical/account/private-key/basic.ics"
+        }
+    },
+    "printer":{
+        "webcam": "http://octoprint/webcam/?action=stream"
 }

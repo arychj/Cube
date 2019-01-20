@@ -2,4 +2,6 @@
 *.bak
 *.old
 
+__pycache__
+
 *parameters.json

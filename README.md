@@ -165,6 +165,26 @@ $.notices.add({
 
 By default, the `notices.js` component will use the [material-icons](http://materializecss.com/icons.html) pack.
 
+
+### agenda.js
+The `agenda.js` component displays today's events from an iCal feed for up to two users.
+
+```json
+// parameters.js
+...
+  "agenda": {
+    "ttl": 10800,                           // REQUIRED
+                                            // How often to refresh the feeds
+      "calendars": {                        //
+                                            // OPTIONAL
+         "left": "ical.feed",               // Feed to display on the left hand side
+                                            // OPTIONAL
+         "right": "ical.feed"               // Feed to display on the right hand side
+      }
+  },
+...
+```
+
 ### ~~traffic.js~~
 **deprecated** - use a [webshot camera](https://github.com/ste-haus/webshot) instead.
 The prevents exposure of the google api keys to the cube, as well as reducing the number of calls to the maps service if multiple cubes are in use.
