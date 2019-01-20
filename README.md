@@ -106,6 +106,19 @@ $('.camera').camera({
                                             // the camera. This is the base url to load the image
                                             // and is typically the the same as the hass host.
 });
+
+
+// paramaters.js
+"cameras": {
+  "typeA": [
+    "camera.entity_id_0",
+    "camera.entity_id_1",
+    "camera.entity_id_2"
+  ],
+  "typeB": [
+    "camera.entity_id_3",
+  ]
+}
 ```
 
 ### floorplan.js
