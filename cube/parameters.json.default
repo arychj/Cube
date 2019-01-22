@@ -3,6 +3,14 @@
         "default",
         "agenda"
     ],
+    "faces": {
+        "front": "main",
+        "back": "log",
+        "left": "security",
+        "right": "traffic",
+        "up": "controls",
+        "down": "printer"
+    },
     "hass": {
         "host": "homeassistant:8123", 
         "password": ""

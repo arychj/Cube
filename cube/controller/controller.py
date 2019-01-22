@@ -1,5 +1,7 @@
 import jinja2, os, sys
 
+from utils.tools import Tools
+
 class Controller:
     def __init__(self, assetsPath, templatesPath, parameters):
         directory = os.path.abspath(os.path.dirname(sys.modules['__main__'].__file__))
@@ -22,10 +24,14 @@ class Controller:
 
         return content
 
-    def getTemplate(self, template):
+    def getTemplate(self, template, overrides=None):
+        parameters = self._parameters.copy()
+        if overrides != None:
+            Tools.mergeDict(parameters, overrides)
+
         try:
             jinja = jinja2.Environment(loader=jinja2.FileSystemLoader(self._templatesDirectory), trim_blocks=True)
-            contents = jinja.get_template(template).render(self._parameters)
+            contents = jinja.get_template(template).render(parameters)
 
             return contents
         except jinja2.exceptions.TemplateNotFound:
