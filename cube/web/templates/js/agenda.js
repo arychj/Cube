@@ -51,8 +51,7 @@
             url: _pollUrl,
             type: 'GET',
             datatype: 'json',
-            success: function (sEvents) {
-				var events = JSON.parse(sEvents);
+            success: function (events) {
 				updateAgenda(events);
             }
         });

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-import argparse, datetime, http.server, json, os, jinja2 
-from mimetypes import MimeTypes
+import argparse, http.server, inspect, json, os
+from collections import OrderedDict
+from importlib import import_module
 from socketserver import ThreadingMixIn
 
-from utils.agenda import Agenda
+from controller.controller import Controller
+from utils.response import Response
 
-__args = None
-__agenda = None
 
 class CubeServer():
     def start(self):
@@ -22,109 +22,45 @@ class CubeServer():
 
     class _server_request_handler(http.server.BaseHTTPRequestHandler):
         _parameters = None
-        _web_directory = None
+        _controllers = None
 
         def get_parameters(self):
             if self._parameters == None:
                 path = os.path.join(os.path.dirname(__file__), args.parameters)
                 if os.path.exists(path):
-                    self._parameters = json.load(open(path))
+                    self._parameters = json.load(open(path), object_pairs_hook=OrderedDict)
                 else:
                     self._parameters = {}
 
             return self._parameters
 
-        def get_assets_directory(self):
-            if self._web_directory == None:
-                directory = os.path.abspath(os.path.dirname(__file__))
-                self._assets_directory = os.path.normpath(os.path.join(directory, args.assets))
+        def get_controllers(self):
+            if self._controllers == None:
+                parameters = self.get_parameters()
 
-            return self._assets_directory
+                self._controllers = []
+                for name in parameters["controllers"]:
+                    module = import_module("controller." + name)
+                    class_ = getattr(module, name.capitalize())
+                    controller = class_(args.assets, args.templates, parameters)
+                    self._controllers.append(controller)
 
-        def get_template(self, template):
-            try:
-                templates = os.path.normpath(os.path.join(os.path.dirname(__file__), args.templates))
-                jinja = jinja2.Environment(loader=jinja2.FileSystemLoader(templates), trim_blocks=True)
-                contents = jinja.get_template(template).render(self.get_parameters())
+            return self._controllers
 
-                return contents
-            except jinja2.exceptions.TemplateNotFound:
-                return None
 
         def do_GET(self):
-            response = 500
-            mimetype = "text/plain"
-            contents = "unknown error"
+            response = Response(code=404, content="not found")
 
-            mime = MimeTypes()
-            
             try:
-                if self.path.startswith("/assets"):
-                    assets = self.get_assets_directory()
-                    
-                    path = self.path.replace("..", "").replace("/assets", "", 1).strip("/")
-                    path = os.path.join(assets, path)
-                    path = os.path.normpath(path)
+                for controller in self.get_controllers():
+                    response = controller.handle(self.path)
 
-                    if path.startswith(assets):
-                        print(path)
-                        if os.path.exists(path):
-                            with open(path, "rb") as file:
-                                contents = file.read()
-
-                            response = 200
-                            mimetype = mime.guess_type(path)[0]
-                        else:
-                            response = 404
-                            contents = "not found"
-                    else:
-                        response = 404
-                        contents = "shennaigans"
-                elif self.path.startswith("/agenda"):
-                    parameters = self.get_parameters()
-                    if 'agenda' in parameters:
-                        calendars = parameters["agenda"]["calendars"]
-                        ttl = (int(parameters["agenda"]["ttl"]) if "ttl" in parameters["agenda"] else None)
-
-                        agenda = Agenda(calendars, ttl)
-    
-                        response = 200
-                        mime_type = "application/json"
-                        contents = json.dumps({
-                            "events": agenda.get_events(),
-                            "updated": str(agenda.get_last_updated())
-                        })
-                    else:
-                        response = 500
-                        contents = "Agenda not configured"
-                elif self.path.startswith("/datetime"):
-                    response = 200
-                    contents = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                else:
-                    if self.path.endswith("/"):
-                        path = self.path + "index.html"
-                    else:
-                        path = self.path
-
-                    contents = self.get_template(path)
-                    if contents == None:
-                        response = 404
-                        contents = "template not found"
-                    else:
-                        response = 200
-                        mimetype = mime.guess_type(path)[0]
+                    if response != None:
+                        break
             except Exception as e:
-                response = 500
-                contents = str(e)
+                response = Response(code=500, content=str(e))
 
-            if isinstance(contents, str):
-                contents = contents.encode("utf-8")
-
-            self.send_response(response)
-            self.send_header("Content-type", mimetype)
-            self.end_headers()
-
-            self.wfile.write(contents)
+            response.respond(self)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--port", dest="port", type=int, default="4096", help="Port to serve on")

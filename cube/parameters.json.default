@@ -1,4 +1,8 @@
 {
+	"controllers": [
+        "default",
+        "agenda"
+    ],
     "hass": {
         "host": "homeassistant:8123", 
         "password": ""

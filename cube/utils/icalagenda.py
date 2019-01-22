@@ -11,7 +11,7 @@ _agenda = None
 _agendaTtl = None
 _agendaLastUpdated = None
 
-class Agenda():
+class iCalAgenda():
     calendars = {}
 
     def __init__(self, calendars, ttl=None):
