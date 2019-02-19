@@ -28,11 +28,14 @@ class Agenda():
         if (_agenda == None) or (_agendaLastUpdated == None) or ((datetime.datetime.now() - _agendaLastUpdated) > timedelta(seconds=self.agendaTtl)):
             _agenda = []
 
-            for name, url in self.calendars.items():
-                events = self.parse_calendar(url)
-                self.set_side(events, name)
+            for name, urls in self.calendars.items():
+                if isinstance(urls, str):
+                    urls = [urls]
 
-                _agenda = _agenda + events
+                for url in urls:
+                    events = self.parse_calendar(url)
+                    self.set_side(events, name)
+                    _agenda = _agenda + events
 
             _agendaLastUpdated = datetime.datetime.now()
 
