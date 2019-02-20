@@ -35,6 +35,9 @@ class Agenda():
                 for url in urls:
                     events = self.parse_calendar(url)
                     self.set_side(events, name)
+
+                    self.consolidate_events(events)
+
                     _agenda = _agenda + events
 
             _agendaLastUpdated = datetime.datetime.now()
@@ -61,6 +64,8 @@ class Agenda():
 
             for e in es:
                 events.append({
+                    'uid': str(e.uid),
+                    'sequence': str(e.sequence),
                     'start': str(e.start),
                     'end': str(e.end),
                     'title': e.summary,
@@ -87,9 +92,25 @@ class Agenda():
 
         return s
 
-    def set_side(self,events, side):
+    def set_side(self, events, side):
         for e in events:
             e['side'] = side
+
+    # consolidates events which are exceptions to a sequences and preservers only the newest version
+    def consolidate_events(self, events):
+        sequences = {}
+
+        for e in events:
+            if e['uid'] not in sequences:
+                sequences[e['uid']] = e
+            else:
+                if e['sequence'] >= sequences[e['uid']]['sequence']:
+                    events.remove(sequences[e['uid']])
+                    sequences[e['uid']] = e
+                else:
+                    events.remove(e)
+
+        return e
 
     def is_tz_naive(self, d):
         return (d.tzinfo is None or d.tzinfo.utcoffset(d) is None)
