@@ -35,6 +35,7 @@ class Event:
         Create a new event occurrence.
         """
         self.uid = -1
+        self.sequence = -1
         self.summary = None
         self.description = None
         self.location = None
@@ -140,6 +141,8 @@ def create_event(component, tz=UTC):
     else: # compute implicit end as start + 0
         event.end = event.start
     
+    event.uid = str(component.get('uid'))
+    event.sequence = str(component.get('sequence'))
     event.summary = str(component.get('summary'))
     event.description = str(component.get('description'))
     event.location = str(component.get('location'))
@@ -211,7 +214,7 @@ def parse_events(content, start=None, end=None):
                 # Unfold recurring events according to their rrule
                 rule = parse_rrule(component, cal_tz)
                 dur = e.end - e.start
-                found.extend(e.copy_to(dt) for dt in rule.between(start - dur, end, inc=True))
+                found.extend(e.copy_to(dt, e.uid) for dt in rule.between(start - dur, end, inc=True))
             elif e.end >= start and e.start <= end:
                 found.append(e)
     return found
