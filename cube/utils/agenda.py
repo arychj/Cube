@@ -110,7 +110,7 @@ class Agenda():
                 else:
                     events.remove(e)
 
-        return e
+        return events
 
     def is_tz_naive(self, d):
         return (d.tzinfo is None or d.tzinfo.utcoffset(d) is None)
