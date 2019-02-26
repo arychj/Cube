@@ -87,8 +87,8 @@
             state = 'Currently ' + state + '.';
             $(this).html(state);
         },
-        '^(dark_sky_precip_probability|pws_precip_1d)$': function(state){
-            state = parseInt(state);
+        '^dark_sky_precip_probability.*': function(state){
+            state = parseFloat(state);
             state = (isNaN(state) ? 0 : state) + '%';
             $(this).html(state);
         },
