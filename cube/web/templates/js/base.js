@@ -42,9 +42,7 @@ $(document).ready(function(){
             '#upstairs [id=living-room]': 'light.living_room',
             '#downstairs [id=music-nook]': 'light.music_nook',
             '#downstairs [id=master-bedroom]': 'light.bedroom_master',
-            '#downstairs [id=master-bathroom-main]': 'light.light_3056',
-            '#downstairs [id=master-bathroom-closet]': 'light.light_3057',
-            '#downstairs [id=master-bathroom-laundry]': 'light.light_3058',
+            '#downstairs [id=master-bathroom]': 'light.bathroom_master',
             '[id=stairs]': 'light.stair'
         },
         'onReady': function(){
