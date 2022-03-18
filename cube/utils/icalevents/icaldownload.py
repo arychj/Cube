@@ -2,10 +2,7 @@
 Downloads an iCal url or reads an iCal file.
 """
 from httplib2 import Http
-
-
-# default http connection to use
-default_http = Http('.cache')
+import logging
 
 
 def apple_data_fix(content):
@@ -15,7 +12,7 @@ def apple_data_fix(content):
     :param content: content to fix
     :return: fixed content
     """
-    return content.replace('TZOFFSETFROM:+5328', 'TZOFFSETFROM:+0053')
+    return content.replace("TZOFFSETFROM:+5328", "TZOFFSETFROM:+0053")
 
 
 def apple_url_fix(url):
@@ -26,7 +23,7 @@ def apple_url_fix(url):
     :return: fixed URL
     """
     if url.startswith("webcal://"):
-        url = url.replace('webcal://', 'http://', 1)
+        url = url.replace("webcal://", "http://", 1)
     return url
 
 
@@ -34,7 +31,24 @@ class ICalDownload:
     """
     Downloads or reads and decodes iCal sources.
     """
-    def __init__(self, http=default_http, encoding='utf-8'):
+
+    def __init__(self, http=None, encoding="utf-8"):
+        # Get logger
+        logger = logging.getLogger()
+
+        # default http connection to use
+        if http is None:
+            try:
+                http = Http(".cache")
+            except (PermissionError, OSError) as e:
+                # Cache disabled if no write permission in working directory
+                logger.warning(
+                    (
+                        "Caching is disabled due to a read-only working directory: {}"
+                    ).format(e)
+                )
+                http = Http()
+
         self.http = http
         self.encoding = encoding
 
@@ -52,7 +66,7 @@ class ICalDownload:
         _, content = self.http.request(url)
 
         if not content:
-            raise ConnectionError('Could not get data from %s!' % url)
+            raise ConnectionError("Could not get data from %s!" % url)
 
         return self.decode(content, apple_fix=apple_fix)
 
@@ -64,11 +78,11 @@ class ICalDownload:
         :param apple_fix: fix wrong Apple tzdata in iCal
         :return: decoded (and fixed) iCal data
         """
-        with open(file, mode='rb') as f:
+        with open(file, mode="rb") as f:
             content = f.read()
 
         if not content:
-            raise IOError("File %f is not readable or is empty!" % file)
+            raise IOError("File %s is not readable or is empty!" % file)
 
         return self.decode(content, apple_fix=apple_fix)
 
@@ -87,7 +101,7 @@ class ICalDownload:
         :return: decoded (and fixed) content
         """
         content = content.decode(self.encoding)
-        content = content.replace('\r', '')
+        content = content.replace("\r", "")
 
         if apple_fix:
             content = apple_data_fix(content)
